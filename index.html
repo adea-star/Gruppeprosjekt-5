@@ -1,8 +1,119 @@
-<!DOCTYPE html>
-<html>
-<body>
-<p>Test</p>
-</body>
+<!DOCTYPE html> <!-- "informasjon" til nettleseren om hvilken dokumenttype HTML 5 -->
+<html lang="no"> <!-- Deklarerer spårket på nettsiden-->
+  
+<!--<head> container for metadata (data om data)-->
+<head>
+    <meta charset="UTF-8" /> <!--Dekker nesten alle tegn og symboler i verden-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!--kontrollerer sidens dimensjoner og skalering  -->
+    <link rel="stylesheet" href="style.css"> <!--Linker til css dokumentet-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<!--Ender head container-->
 
-</html>
+<!--En beholder for et sett med navigasjonslenker/introduksjonsinnhold-->
+<header id="kodereisen">
+    <h2><a href="#kodereisen"><h1>Kode <span>Reisen</span></h1></h2> <!-- Logo/overskrift til nettsiden-->
+    <nav> <!--definerer et sett med navigasjonslenker-->
+      <!--<li> definerer et listeelement-->
+      <li><a href="#historie">Historie</a></li> <!--viser siden med spillets regler-->
+      <li><a href="#spillets_regler">Spillets regler</a></li> <!--viser siden med historien til spillet-->
+      <li><a href="#om_oss">Utviklere</a></li> <!--viser siden med utviklerene-->
+    </nav>
+  </header>
+  <!--Ender header beholder-->
 
+<!--En beholder for et sett med bakgrunn med tekst og startknapp-->
+  <section class="bakgrunn">
+    <div class="bakgrunnbilde"></div> <!-- for bakgrunnsbilde; hentes med CSS -->
+    <br><!-- Linjeskift for ekstra plass -->
+    <br>
+    <p><br> <!-- Begynnelse av avsnittet med tekst -->
+      Står du overfor valgene som kan forme fremtiden din? <br>Hva om hvert valg du tar, fra det å delta på fest eller å ta en eksamen, kan påvirke suksessen i studiene dine?  
+      <br><span>Prøv din KodeReisen</span> <!-- Tekst i span-tag for spesiell styling -->
+     </p>
+    <a href="#" class="bakgrunnknapp">Start spill</a> <!-- En lenke som fungerer som en knapp for å starte spillet -->
+    <br>
+        <br>
+  </section>
+  <!--Ender section beholder-->
+
+  
+  <!--En beholder for et sett med spillets historie med tekst og bilde-->  
+  <section class="spill_historie" id="historie">   
+    <div class="spill_innhold"> <!-- Container for innholdet i seksjonen -->
+      <div class="spill_bilde"> <!-- Container for bildet-->
+        <img src="images/ntnu.jpeg" alt="spillets historie">  <!-- Bilde av spillets historie -->
+      </div>
+      <div class="spill-introduksjon"> <!-- Container for introduksjonen til spillet -->
+        <h1 >Historien</h1> <!-- Overskrift for seksjonen -->
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet velit at est aliquet malesuada. Vivamus auctor ex et turpis facilisis, at vehicula lacus interdum.</p> <!-- Første avsnitt ->
+        <p>Donec ullamcorper velit id odio vehicula bibendum. Curabitur non libero at orci aliquet placerat ut a erat. Integer a turpis malesuada, ultrices magna sed, auctor orci.</p>   <!-- Andre avsnitt -->
+    </div>
+    </div>
+    <br>  <!-- Linjeskift -->
+    <a href="#kodereisen" class="forrig">&#8249; Tilbake</a> <!-- En lenke for å navigere tilbake -->
+  </section>
+  <!--Ender section beholder-->
+
+  <!--En beholder for et sett med spill regler, overskrift og liste-->  
+  <section class="spill_regler" id="spillets_regler"> <!-- Begynnelse av seksjonen med klassen "spill_regler" -->
+    <div class="regler"> <!-- Container for innholdet som inneholder spillereglene -->
+      <div class="spill_overskrift"> <!-- Container for overskriften  -->
+        <h1>Spillets regler</h1>  <!-- Overskrift  -->
+        <p>Følg reglene nedenfor for å mestre spillet!</p>
+      </div>
+      <div class="spill_liste"> <!-- Container for listen over spilleregler -->
+        <ol>
+          <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec sapien a dui.</li>
+          <li>Curabitur eget massa at est fringilla ultricies. Donec venenatis elit vitae sem.</li>
+          <li>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</li>
+          <li>Phasellus accumsan velit eget odio suscipit, non lobortis lectus malesuada.</li>
+          <li>Suspendisse potenti. Nam consectetur dolor sit amet libero feugiat.</li>
+        </ol>
+      </div>
+    </div>
+    <br> <!-- Linjeskift -->
+    <a href="#kodereisen" class="forrig">&#8249; Tilbake</a> <!-- En lenke -->
+  </section>
+    <!--Ender section beholder-->
+
+  <!--En beholder for alle utviklene oversikt-->  
+  <section class="om-oss" id="om_oss"> <!-- Begynnelse av seksjonen med class -->
+    <div class="oss-introduksjon">  <!-- Container for introduksjonen til teamet -->
+      <h1>About Us</h1> <!-- Overskrift -->
+      <div class="utviklere">  <!-- Container for utviklerne i teamet -->
+        <div class="utvikler"> <!-- Begynnelse av den første utvikleren -->
+          <img src="images/raket.png" alt="Adea Kaliqani">
+          <h2>Adea Kaliqani </h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="utvikler"> <!-- Begynnelse av den andre utvikleren -->
+          <img src="images/raket.png" alt="Maya Barstad Blekken">
+          <h2>Maya Barstad Blekken</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="utvikler"> <!-- Begynnelse av den tredje utvikleren -->
+          <img src="images/raket.png" alt="Even Bakken">
+          <h2>Even Bakken</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="utvikler"> <!-- Begynnelse av den fjerde utvikleren -->
+          <img src="images/raket.png" alt="Kristian Schevik Wold">
+          <h2>Kristian Schevik Wold</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+        </div>
+      </div>
+    </div>
+    <br> <!-- Linjeskift -->
+    <a href="#kodereisen" class="forrig">&#8249; Tilbake</a> <!-- En lenke for å navigere tilbake -->
+  </section>
+  <!--Ender til section-->
+
+  
+<footer>  <!-- Begynnelse av footeren på nettsiden -->
+      <p>&copy;  Gruppe 5 2024</p> <!--copyright-informasjon -->
+</footer> <!-- Avslutning av footeren -->
+    
+</body>  <!-- Avslutning av body-taggen -->
+</html> <!-- Avslutning av html-dokumentet -->
