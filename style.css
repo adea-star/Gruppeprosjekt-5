@@ -1,0 +1,554 @@
+/*Velger alle elementer */
+*{
+    margin:0;   /*universiel null margin  */
+    padding:0;  /*universiel null padding  */
+    box-sizing:border-box; /* Setter box-sizing til border-box, slik at padding og border inkluderes i elementets totale bredde/høyde */ 
+  }
+
+/*Velger hele HTML-dokumentet */
+  html{
+    scroll-behavior: smooth; /*siden ruller jevnt når brukeren navigerer */
+    font-family: 'Poppins', sans-serif; /*font-teksten */
+  }
+
+  /*  ################# NAVIGATION BAR OG HEADER ######################*/
+
+  /*Velger ul og nav */
+  ul,nav{
+    list-style:none; /*fjerner standard punktliste-stil fra ul og nav */
+  } 
+  
+  /*Velger a */
+  a{
+    text-decoration:none; /*fjerner understrekning fra lenker */
+    cursor:pointer; /*muspekeren peker ved hovering over lenken */
+    color:inherit; /* ikke  standard lenkefarge */
+  }
+ 
+  /* Velger alle <h1>-elementer */
+  h1 {
+    font-size: 42px;   /* Setter skriftstørrelsen til 42 piksler */
+    color: #fff;   /* Setter tekstfargen til hvit */
+    font-weight: bold;   /* Setter fontvekten til fet */
+  }
+ 
+ /* Velger alle <span>-elementer */  
+span {
+  font-weight: bold; /* Setter fontvekten til fet */
+  color: #376fab;  /* Setter tekstfargen til blå */
+}
+ 
+/* Velger header */
+  header{
+    position:absolute; /*plasserer headeren absolutt  */
+    top:0; /*plasserer headeren 0 piksler fra toppen */
+    left:0; /*plasserer headeren 0 piksler fra venstre side */ 
+    z-index:10; /* setter z-index for å sikre headeren over andre elementer */
+    width:100%; /* setter bredden til 100& fylle hele bredden vinduet */
+  
+    display: -webkit-flex; /* Flexbox for eldre nettlesere (WebKit) */
+    display: -moz-flex; /* Flexbox for eldre nettlesere (Mozilla) */
+    display: -ms-flex; /* Flexbox for eldre nettlesere (Microsoft) */
+    display: -o-flex; /* Flexbox for eldre nettlesere (Opera) */
+    display: flex; /* Aktiverer flexbox-layout for moderne nettlesere */
+    
+    justify-content: space-between; /*fordeler elementene med plass mellom dem*/
+    align-items:center;  /*centrerer elementene */
+    color: #fff; /* tekstfarge hvit */
+    padding:34px 100px 0; /* padding: 34px oppe, 100px på høyre og venstre, 0 nede  */
+  }
+
+/*velger header nav */
+header nav{
+  display: -webkit-flex; /* Flexbox for eldre nettlesere (WebKit) */
+  display: -moz-flex; /* Flexbox for eldre nettlesere (Mozilla) */
+  display: -ms-flex; /* Flexbox for eldre nettlesere (Microsoft) */
+  display: -o-flex; /* Flexbox for eldre nettlesere (Opera) */
+  display: flex; /* Aktiverer flexbox-layout for moderne nettlesere */
+}
+
+/*velger header nav li */
+header nav li{
+  margin: 0 15px; /*horisontal margin 15 px på hver side av listeelementene */
+}
+
+/*velger header nav li:first-child */
+header nav li:first-child{
+  margin-left:0;  /* Fjerner venstre margin for det første listeelementet */
+}
+
+/*velger header nav li:last-child */
+header nav li:last-child{
+  margin-right:0; /* Fjerner høyre margin for det siste listeelementet */
+}
+
+/* Style for links in the navigation */
+header nav a {
+  text-decoration: none; /* Fjerner understrekning fra lenker */
+  color: white; /* Setter tekstfargen til hvit */
+  transition: color 0.3s ease; /* Jevn overgang for fargeendring */
+}
+
+/* Hover effect for navigation links */
+header nav a:hover {
+  color: #376fab; /* Endrer fargen til blå ved hovering */
+}
+
+/*aktiverer padding under hvis vindusbredden er 1000 px mindre */
+@media(max-width:1000px){ 
+  header{
+    padding: 20px 50px; /*reduserer padding til 20 px Oppe/nede og 50 høyre/venstre for mindre skjermer */
+  }
+}
+
+/*aktiverer stilen under hvis vindusbredden er 700 px mindre */
+@media(max-width:700px){
+  header{
+    flex-direction:column;  /*endrer retning av flex-elementene for bedre plass */
+  }
+  header h2{
+    margin-bottom:15px; /* Legger til 15px bunnmargin for h2-elementet i headeren */
+  }
+  header nav li{
+    margin:0 7px; /* Reduserer horisontal margin til 7px for listeelementene i navigasjonen */
+  }
+}
+
+/*Bakgrunns område */
+/*velger section */
+section{
+  display: -webkit-flex; /* Flexbox for eldre nettlesere (WebKit) */
+  display: -moz-flex; /* Flexbox for eldre nettlesere (Mozilla) */
+  display: -ms-flex; /* Flexbox for eldre nettlesere (Microsoft) */
+  display: -o-flex; /* Flexbox for eldre nettlesere (Opera) */
+  display: flex; /* Aktiverer flexbox-layout for moderne nettlesere */
+
+  flex-direction:column; /*innholdet stables vertikalt */
+  align-items:center; /*sentrailserer innholdet */
+  padding: 110px 100px;  /*padding 110 px oppe/ned og 100 px på høyre/venstre */
+}
+
+/*aktiverer under hvis vindusbredden er 1000 px mindre */
+@media (max-width:1000px){
+  section{
+  padding:100px 50px; /* Reduserer padding til 100px oppe/nede og 50px på høyre/venstre */
+  }
+}
+/* Aktiverer stilen under hvis vindusbredden er 600px eller mindre */
+@media (max-width:600px){
+  section{
+  padding:125px 30px; /* Øker padding til 125px oppe/nede og reduserer til 30px på høyre/venstre */
+  }
+}
+
+/*velger section p */
+section p{
+  max-width:800px;  /* Setter maksimal bredde på avsnittet til 800px  */
+  text-align:center; /* Sentrerer teksten horisontalt */
+  margin-bottom:35px; /* Legger til 35px bunnmargin for avsnittet */
+  padding:0 20px; /* Legger til 20px horisontal padding */
+  line-height:2; /* Setter linjeavstanden til 2 for bedre lesbarhet */
+}
+
+/*velger bakgrunn */
+.bakgrunn{
+  position:relative; /* Setter relativ posisjonering  */
+  justify-content:center; /* Sentrerer innholdet horisontalt */
+  min-height:100vh; /* Setter minimum høyde til 100% av vindushøyden */
+  color: #fff; /* Setter tekstfargen til hvit */
+  text-align:center;  /* Sentrerer teksten horisontalt */
+}
+
+/*velger bakgrunnsbilde */
+.bakgrunn .bakgrunnbilde{
+  background-image:url(images/background.png.jpg); /* Setter bakgrunnsbilde */
+  position:absolute; /* Plasserer bildet absolutt i forhold til nærmeste posisjonerte element */
+  top:0; ; /* Plasserer bildet 0 piksler fra toppen */
+  left:0; /* Plasserer bildet 0 piksler fra venstre side */
+  width:100%; /* Setter bredden til 100%  */
+  height:100%; /* Setter høyden til 100%  */
+  -webkit-background-size:cover; /* Sørger for at bakgrunnsbildet dekker hele området */
+  background-size:cover; /* Sørger for at bakgrunnsbildet dekker hele området */
+  z-index:-1;  /* Setter z-index til -1 for å plasserer bildet bak andre elementer */
+}
+
+/*velger bagkgrunnbilde after */
+.bakgrunn .bakgrunnbilde::after{
+  content:"";  /* Oppretter et tomt innhold  */
+  position:absolute;  /* Plasserer laget absolutt i forhold til nærmeste posisjonerte element */
+  top:0; /* Plasserer laget 0 piksler fra toppen */
+  left:0; /* Plasserer laget 0 piksler fra venstre side */
+  width:100%; /* Setter bredden til 100% av forelder-elementet */
+  height:100%;  /* Setter høyden til 100% av forelder-elementet */
+  background-color:#000; /* Setter bakgrunnsfargen til svart */
+  opacity:.5;/* Setter opasiteten til 50% */
+}
+
+/*velger bagkrunn h1 */
+.bakgrunn h1{
+  margin-bottom:15px; /* Legger til 15px bunnmargin for h1-elementet */
+  font-size:65px; /* Setter skrifttypestørrelsen til 65 piksler for h1-elementet */
+}
+
+/*velger bakgrunn h3 */
+.bakgrunn h3 {
+  margin-bottom: 40px; /* Legger til 40px bunnmargin for h3-elementet */
+  font-size: 25px; /* Setter skrifttypestørrelsen til 25 piksler for h3-elementet */
+}
+
+/*velger bakgrunnknapp */
+.bakgrunn a.bakgrunnknapp {
+  padding: 15px 35px; /* Legger til 15px vertikal og 35px horisontal padding for knappen */
+  background: #376fab; /* Setter bakgrunnsfargen til en blå */
+  border-radius: 50px; /* Gir knappen avrundede hjørnerm*/
+  text-transform: uppercase; /* store bokstaver */
+  transition: background 0.3s ease; /* Jevn overgang for bakgrunnsfarge */
+}
+
+
+/* Hover effect for the button */
+.bakgrunn a.bakgrunnknapp:hover {
+  background: #416487; /* Endrer bakgrunnsfargen til en mørkere blå nyanse ved hovering */
+}
+ 
+/* Aktiverer stilen under hvis vindusbredden er 800px mindre */
+@media (max-width: 800px) { 
+
+  .bakgrunn {
+      min-height: 600px; /* Setter minimum høyde til 600px for .bakgrunn for mindre skjermer */
+  }
+
+  .bakgrunnbilde h1 {
+      font-size: 32px; /* Reduserer skrifttypestørrelsen til 32 piksler for h1-elementet i .bakgrunnbilde */
+  }
+
+  .bakgrunn h3 {
+      font-size: 20px; /* Reduserer skrifttypestørrelsen til 20 piksler for h3-elementet i .bakgrunn */
+  }
+
+  .bakgrunn a.bakgrunnknapp {
+      padding: 15px 40px; /* Justerer padding til 15px vertikalt og 40px horisontalt for knappen */
+  }
+}
+
+/*###################Spillets historie################### */
+
+/* selecter section class spill_historie  */
+.spill_historie {
+  display: flex;  /* Setter display-egenskapen til flex */
+  justify-content: center;  /* Justerer elementene horisontalt */ 
+  align-items: center;   /* Justerer elementene vertikalt i midten */
+  padding: 100px 50px; /*  100 piksler med padding på toppen og bunnen, og 50 piksler til venstre og høyre */
+  min-height: 100vh; /* Setter minimum høyde til 100% */
+  background-color: #0d0d0d;   /* Mørk bakgrunnsfarge for universvibe */
+  color: #e6e6e6;  /* Lys gråfarge for tekst */
+  background-image: linear-gradient(135deg, rgba(0, 25, 51, 0.9), rgba(0, 0, 0, 0.9)), url('images/stjerne.jpg'); /* Legg til en gradient med stjernebakgrunn */
+  background-size: cover; /* Fyller bakgrunnen */
+}
+
+/* seleter class spill_innhold */
+.spill_innhold {
+  display: flex;  /* Setter display-egenskapen til flex */
+  flex-direction: row; /* Setter retningen rad */
+  align-items: center; /* Justerer elementene midten */
+  justify-content: space-between; /* Fordeler plass mellom elementene */
+  max-width: 1200px;  /* Setter maksimal bredde på 1200 piksler */
+  width: 100%;    /* Setter bredden til 100%  */
+  gap: 50px; /* Avstand mellom bilde og tekst */
+}
+
+/* Styling for image */
+.spill_bilde img {
+  max-width: 75%; /* Bilde skalerer responsivt */
+  border-radius: 15px; /* Litt avrundede kanter */
+  box-shadow: 0px 8px 16px rgba(0, 102, 204, 0.5); /* Blå skygge for dybdeeffekt */
+}
+
+/* Game description styling */
+.spill-introduksjon {
+  max-width: 600px; /* Teksten tar opp til maks 600px */
+}
+
+/* Velger alle <h1>-elementer inne klassen */
+.spill-introduksjon h1 {
+  font-size: 48px; /* Setter skriftstørrelsen til 48 piksler */
+  color: #376fab;   /* Lys blåfarge for overskriften */
+  margin-bottom: 20px;  /* Legger til en bunnmargin på 20 piksler  */
+}
+
+/* alle <p>-elementer inne i elementer klassen */
+.spill-introduksjon p {
+  line-height: 1.6;  /* Setter linjehøyden til 1.6 */
+  margin-bottom: 20px;  /* Legger til en bunnmargin på 20 piksler */
+  color: #b0c4de; /* Lysere gråfarge for brødteksten */
+}
+
+/* Responsiv for nettsiden */
+/*1000 piksler eller mindre  */
+@media (max-width: 1000px) {
+  .spill_innhold {
+    flex-direction: column; /* Stabler bilde og tekst vertikalt */
+    text-align: center; /* Sentraliserer tekst for mindre skjermer */
+  }
+
+  .spill-introduksjon {
+    max-width: 100%; /* Tar opp hele bredden på små skjermer */
+  }
+
+  .spill_bilde img {
+    max-width: 80%; /* Reduserer bildestørrelsen på mindre skjermer */
+  }
+}
+
+/*600 piksler eller mindre  */
+@media (max-width: 600px) {
+  /* Velger <h1>-elementer inne klassen */
+  .spill-introduksjon h1 { 
+    font-size: 36px;  /* Setter skriftstørrelsen til 36 piksler */
+  }
+   /* Velger <p>-elementer inne klassen */
+  .spill-introduksjon p {
+    padding: 0 15px;     /* Legger til 15 piksler med horisontal padding */
+  }
+}
+/*################Om regler################*/
+
+/*velger class spill_regler */
+.spill_regler {
+  padding: 100px 50px; /* indre marger på 100px øverst/nederst og 50px på sidene */
+  background-color: #222; /* Mørk bakgrunn */
+  color: #f0f0f0; /* Lys tekstfarge */
+  display: flex; /* Bruker fleksboks for å styre oppsettet */
+  justify-content: center; /* Sentrerer innholdet horisontalt */
+  align-items: center; /* Sentrerer innholdet vertikalt */
+  min-height: 100vh; /* Setter minimum høyde */
+  background-image: url('images/stjerne.jpg'); /* Bakgrunnsbilde fra images-mappen */
+  background-size: cover; /* Dekker hele bakgrunnen med bildet */
+}
+
+/* velger class regler */
+.regler {
+  max-width: 1000px; /* Setter maksimal bredde */
+  width: 100%; /* Gjør at elementet fyller hele bredden */
+  display: flex; /* Gjør at elementet fyller hele bredden */
+  flex-direction: column; /* Organiserer innholdet vertikalt */
+  align-items: center; /* Sentrerer elementene horisontalt */
+  gap: 40px; /* Legger til 40px avstand mellom hvert element */
+}
+
+/* velger overskrift */
+.spill_overskrift h1 {
+  font-size: 48px; /* Setter skriftstørrelsen til 48px */
+  color: #376fab; /* Blå farge til overskriften */
+  margin-bottom: 10px; /* Legger til 10px avstand under */
+  text-transform: uppercase; /* Konverterer uppercase */
+}
+
+/*velger p */
+.spill_overskrift p {
+  font-size: 18px; /* Setter skriftstørrelsen til 18px */
+  color: #fff; /* Lysere grå farge for bedre kontrast */
+  text-align: center; /* Sentrerer teksten */
+  max-width: 800px; /* Begrenser tekstbredden til maks 800px */
+  margin-bottom: 40px; /* Legger til 40px avstand under */
+}
+
+/* velger class spill_liste  */
+.spill_liste {
+  display: flex; /* Bruker fleksbok */
+  justify-content: center; /* Sentrerer alle elementer horisontalt */
+  width: 100%; /* Setter bredden  */
+}
+
+/*velger ol */
+.spill_liste ol {
+  counter-reset: list-counter; /* Tilpasset tellemekanisme */
+  list-style: none; /* Fjerner standard punktliste- eller nummereringsstiler */
+  padding-left: 0; /*Fjerner innrykk på venstre side  */
+  max-width: 600px; /*listebredden til maks 600px  */
+  width: 100%; /*beholderens max-width  */
+}
+
+/* velger hver li */
+.spill_liste li {
+  counter-increment: list-counter; /*øker 1 for hvert listeelement */
+  position: relative; /*plassere elementer relativt til li-elementet */
+  margin-bottom: 20px; /*Legger til 20px avstand under hvert listeelement  */
+  padding: 20px 40px; /*Setter innvendig marg på 20px topp/bunn og 40px venstre/høyre  */
+  background-color: rgba(255, 255, 255, 0.8); /* Lys bakgrunn med gjennomsiktighet */
+  border-radius: 15px; /*hjørnene avrundede med en radius på 15px  */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /*Legger til en subtil skygge  */
+  font-size: 18px; /*skriftstørrelsen til 18px  */
+  color: #333; /*mørkegrå farge som  */
+}
+
+/* Number styling before each rule */
+.spill_liste li::before {
+  content: counter(list-counter) "."; /* Viser nummeret fra list-counter */
+  position: absolute; /*Plasserer nummeret absolutt i forhold til `li */
+  left: -30px; /*Flytter nummeret 30px til venstre  */
+  top: 50%; /*Plasserer nummeret midt i høyden  */
+  transform: translateY(-50%); /*Justerer nummeret til å være perfekt sentrert  */
+  font-size: 24px; /*skriftstørrelsen til 24px  */
+  font-weight: bold; /* fet for ekstra tydelighet */
+  color: #376fab; /* Matcher overskriften */
+}
+
+/* Responsiv til nettsiden */
+/*1000 piksler eller mindre  */
+@media (max-width: 1000px) {
+  .spill_overskrift h1 {
+    font-size: 36px; /* Reduserer skriftstørrelsen på overskriften */
+  }
+
+  .spill_overskrift p {
+    font-size: 16px; /* Reduserer skriftstørrelsen på avsnittet */
+  }
+
+  .spill_liste li {
+    font-size: 16px; /* Reduserer skriftstørrelsen på listeelementene */
+  }
+}
+
+/*600 piksler eller mindre  */
+@media (max-width: 600px) {
+  .spill_overskrift h1 {
+    font-size: 28px; /* Ytterligere reduksjon i skriftstørrelse */
+  }
+
+  .spill_overskrift p {
+    font-size: 14px; /* Ytterligere reduksjon i skriftstørrelse */
+  }
+
+  .spill_liste li {
+    padding: 15px 30px; /*å spare plass på små skjermer  */
+    font-size: 14px; /*Justerer skriftstørrelsen  */
+  }
+
+  .spill_liste li::before {
+    font-size: 20px; /* Reduserer størrelsen på nummereringen */
+    left: -20px; /*Justerer posisjonen til nummereringen  */
+  }
+}
+
+
+/* ####################Om oss############## */
+/*velger class om-oss */
+.om-oss {
+  padding: 100px 50px;  /* Legger til 100px  på toppen/bunnen og 50px på venstre/høyre */
+  background-color: #0d0d0d; /* Mørk bakgrunnsfarge for universvibe */
+  color: #e6e6e6; /* Lys gråfarge for tekst */
+  display: flex;  /* Bruker fleksboks */
+  justify-content: center;  /* Sentrerer innholdet */
+  align-items: center; /* Sentrerer innholdet */
+  min-height: 100vh; /* Setter minimum høyde til 100%  */
+  background-image: linear-gradient(135deg, rgba(0, 25, 51, 0.9), rgba(0, 0, 0, 0.9)), url('images/stjerne.jpg'); /* Legg til en gradient med stjernebakgrunn */
+  background-size: cover; /* Fyller bakgrunnen */
+}
+
+/* velger class oss-introduksjon */
+.oss-introduksjon {
+  max-width: 1200px; /* Setter maksimal bredde til 1200px */
+  width: 100%;  /* Setter bredden til å fylle hele */
+  text-align: center; /* Sentrerer teksten  */
+}
+
+/*velger h1 */
+.oss-introduksjon h1 {
+  font-size: 48px;  /* Setter skriftstørrelsen til 48px */
+  color: #376fab; /* Lys blåfarge for overskriften */
+  margin-bottom: 60px;  /* Legger til 60px avstand under  */
+  text-transform: uppercase;   /* Gjør all tekst  uppercase */
+}
+
+/* velger class utivklere */
+.utviklere {
+  display: flex; /* Aktiverer fleksboks */
+  justify-content: space-around; /* Fordeler plass mellom elementene */
+  flex-wrap: wrap;   /* Tillater elementene å bryte  */
+  gap: 40px; /* Legger til 40px avstand mellom elementene */
+}
+
+/* velger class utvikler */
+.utvikler {
+  background-color: rgba(255, 255, 255, 0.1); /* Gjør bakgrunnsfargen litt gjennomsiktig */
+  padding: 20px; /*Legger til 20px  */
+  border-radius: 15px; /* Runder hjørnene på elementet */
+  box-shadow: 0px 4px 10px rgba(0, 102, 204, 0.5);  /* Legger til en subtil blå skygge */
+  text-align: center;  /* Sentrerer teksten  */
+  max-width: 250px; /* Setter maksimal bredde til 250px */
+  flex: 1 1 calc(25% - 40px); /* Responsiv bredde for 4 kolonner */
+  transition: transform 0.3s ease;  /* Legger til en jevn overgangseffekt */
+}
+
+/* hover effekt */
+.utvikler:hover {
+  transform: translateY(-10px); /* Flytter elementet 10px oppover  */
+}
+
+/* velger img */
+.utvikler img {
+  width: 150px; /* Setter bredden til 150px  */
+  height: 150px; /* Setter høyden til 150px */
+  border-radius: 50%; /* Runder hjørnene helt */
+  margin-bottom: 20px; /* Legger til 20px avstand under */
+  object-fit: cover; /*fyller hele området  */
+}
+
+/* velger h2 */
+.utvikler h2 {
+  font-size: 24px; /* Setter skriftstørrelsen til 24px */
+  color: #376fab; /* Lys blåfarge for navn */
+  margin-bottom: 10px; /* Legger til 10px avstand under */
+}
+
+/* velger p */
+.utvikler p {
+  font-size: 16px; /*tekststørrelse 16 px */
+  color: #b0c4de; /* Lysere gråfarge for brødteksten */
+}
+
+/* responsiv til nettisden */
+/*1000 piksler eller mindre  */
+@media (max-width: 1000px) {
+  .utvikler {
+    flex: 1 1 calc(50% - 40px); /* Tilpasser 2 kolonner på mellomstore skjermer */
+  }
+
+  .oss-introduksjon h1 {
+    font-size: 36px; /*Reduserer skriftstørrelsen  */
+  }
+}
+
+/*600 piksler eller mindre  */
+@media (max-width: 600px) {
+  .utvikler {
+    flex: 1 1 100%; /* Full bredde for små skjermer */
+  }
+
+  .oss-introduksjon h1 {
+    font-size: 28px; /*reduserer skriftstørrelsen  */
+  }
+}
+
+
+/* #############footer############### */
+
+/*velger footer */
+footer {
+  display: -webkit-flex; /* Aktivere fleksboks-modellen for Safari */
+  display: -moz-flex; /* Aktivere fleksboks-modellen for eldre versjoner av Firefox */
+  display: -ms-flex; /* Aktivere fleksboks-modellen for eldre Internet Explorer */
+  display: -o-flex; /* Aktivere fleksboks-modellen for Opera (gammel versjon) */
+  display: flex; /* Aktivere fleksboks-modellen for moderne nettlesere */
+  flex-direction: column; /* Innholdet i en kolonne */
+  align-items: center; /* Sentrerer innholdet */
+  text-align: center; /* Sentrerer teksten */
+  color: #fff; /* Hvit tekstfarge */
+  background-color: rgba(0, 0, 0, 0.7); /* Svart bakgrunn med opasitet */
+  padding: 60px 0; /* Legger til 60px */
+  background-image: url('images/background.png.jpg'); /* Angi banen til bakgrunnsbildet */
+  background-size: cover; /* Fyller bakgrunnen */
+  background-position: center; /* Sentrerer bakgrunnsbildet */
+}
+
