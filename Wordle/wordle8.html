@@ -266,16 +266,15 @@
 
             /*Sjekker om ordet stemmer med løsningsordet*/
             for (let i = 0; i < 5; i++) {
-                const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
-                const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
-                const letter = guess[i];
-
-                if (letter === targetWord[i]) {
-                    tile.classList.add('correct');
-                    keyElement.classList.add('green');
-                } else if (targetWord.includes(letter)) {
+                 const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
+                 const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
+                 const letter = guess[i];
+                 
+                 if (tile.classList.contains('correct')) continue;
+                 if (targetWord.includes(letter) && targetLetterCount[letter] > 0) {
                     tile.classList.add('present');
                     keyElement.classList.add('yellow');
+                    targetLetterCount[letter] -= 1;
                 } else {
                     tile.classList.add('absent');
                     keyElement.classList.add('gray');

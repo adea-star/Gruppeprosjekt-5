@@ -1,239 +1,240 @@
 body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-image: url('../images/stjerne.jpg');
-  background-size: cover;
-  background-position: center;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  overflow: hidden; /* Prevent scrolling on small screens */
+  margin: 0; /* Fjerner standard margin */
+  height: 100vh; /* Setter høyden til å være 100% av viewport høyden */
+  display: flex; /* Bruker flexbox for å sentrere innholdet */
+  flex-direction: column; /* Setter retningen på elementene til å være vertikal */
+  align-items: center; /* Sentraliserer elementene horisontalt */
+  justify-content: center; /* Sentraliserer elementene vertikalt */
+  background-image: url('../images/stjerne.jpg'); /* Setter bakgrunnsbilde */
+  background-size: cover; /* Sørger for at bakgrunnsbildet dekker hele området */
+  background-position: center; /* Plasserer bakgrunnsbildet i midten */
+  color: white; /* Setter tekstfargen til hvit */
+  font-family: Arial, sans-serif; /* Angir skrifttypen */
+  text-align: center; /* Sentraliserer teksten */
+  overflow: hidden; /* Forhindrer at det blir rullet på små skjermer */
 }
 
 #start-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
-  padding: 30px;
-  max-width: 600px;
-  width: 80%;
-  margin: 0 auto;
-  height: 80vh;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  overflow: hidden; /* Prevent overlap of elements */
+  display: flex; /* Bruker flexbox for å organisere innholdet */
+  flex-direction: column; /* Setter retningen på elementene til vertikal */
+  justify-content: center; /* Sentraliserer elementene vertikalt */
+  align-items: center; /* Sentraliserer elementene horisontalt */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent svart bakgrunn */
+  border-radius: 10px; /* Rundede hjørner */
+  padding: 30px; /* Indre avstand */
+  max-width: 600px; /* Maksimal bredde på startskjermen */
+  width: 80%; /* Setter bredde til 80% av skjermstørrelsen */
+  margin: 0 auto; /* Sentraliserer startskjermen horisontalt */
+  height: 80vh; /* Setter høyden til 80% av viewport høyden */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Legger til en skygge rundt elementet */
+  overflow: hidden; /* Forhindrer at elementer overlapper */
 }
 
 h1 {
-  margin-bottom: 20px;
-  font-size: 2.5em;
-  line-height: 1.4;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
-  letter-spacing: 1px;
+  margin-bottom: 20px; /* Gir mellomrom under overskriften */
+  font-size: 2.5em; /* Setter fontstørrelsen */
+  line-height: 1.4; /* Linjeavstand */
+  font-weight: bold; /* Fet skrift */
+  text-transform: uppercase; /* Gjør teksten stor */
+  color: #fff; /* Setter tekstfargen til hvit */
+  letter-spacing: 1px; /* Øker mellomrommet mellom bokstavene */
 }
 
 p {
-  font-size: 1.2em;
-  margin: 10px 0;
-  line-height: 1.6;
-  color: #f0f0f0;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  font-size: 1.2em; /* Setter fontstørrelsen */
+  margin: 10px 0; /* Gir mellomrom over og under avsnittet */
+  line-height: 1.6; /* Linjeavstand */
+  color: #f0f0f0; /* Lette grå tekstfarge */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Legger til tekstskygge */
 }
 
 .difficulty-options {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap; /* Helps on mobile */
+  margin-top: 30px; /* Gir mellomrom over valgene */
+  display: flex; /* Bruker flexbox for å organisere knappene */
+  justify-content: center; /* Sentraliserer knappene horisontalt */
+  gap: 20px; /* Legger til mellomrom mellom knappene */
+  flex-wrap: wrap; /* Lar knappene bryte linje på små skjermer */
 }
 
 .difficulty-options button {
-  padding: 12px 24px;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-  font-weight: bold;
+  padding: 12px 24px; /* Legger til padding */
+  font-size: 16px; /* Setter fontstørrelsen */
+  cursor: pointer; /* Endrer markøren til en hånd ved hover */
+  margin: 10px; /* Gir mellomrom mellom knappene */
+  background-color: #4CAF50; /* Grønn bakgrunnsfarge */
+  color: white; /* Hvit tekstfarge */
+  border: none; /* Fjerner kantlinjen */
+  border-radius: 5px; /* Rundede hjørner */
+  transition: background-color 0.3s; /* Jevn overgang for bakgrunnsfargen */
+  font-weight: bold; /* Fet skrift */
 }
 
 .difficulty-options button:hover {
-  background-color: #45a049;
+  background-color: #45a049; /* Endrer bakgrunnsfargen ved hover */
 }
 
 .difficulty-options button:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(0.98); /* Reduserer knappens størrelse når den klikkes */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Legger til en skygge ved klikk */
 }
 
 #start-screen h1,
 #start-screen p {
-  max-width: 90%;
+  max-width: 90%; /* Setter maksimal bredde for teksten */
 }
 
 @media (max-width: 600px) {
   #start-screen {
-    width: 90%;
-    padding: 20px;
+    width: 90%; /* Endrer bredden på startskjermen på små skjermer */
+    padding: 20px; /* Reduserer polstring på små skjermer */
   }
 
   h1 {
-    font-size: 2em;
+    font-size: 2em; /* Reduserer fontstørrelsen på overskriften */
   }
 
   p {
-    font-size: 1em;
+    font-size: 1em; /* Reduserer fontstørrelsen på teksten */
   }
 }
 
 #end-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
-  padding: 30px;
-  max-width: 600px;
-  width: 80%;
-  margin: 0 auto;
-  height: 80vh;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex; /* Bruker flexbox for å organisere innholdet */
+  flex-direction: column; /* Vertikal retning på elementene */
+  justify-content: center; /* Sentraliserer elementene vertikalt */
+  align-items: center; /* Sentraliserer elementene horisontalt */
+  text-align: center; /* Sentraliserer teksten */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent bakgrunn */
+  border-radius: 10px; /* Rundede hjørner */
+  padding: 30px; /* Indre avstand */
+  max-width: 600px; /* Maksimal bredde på sluttskjermen */
+  width: 80%; /* Setter bredde til 80% av skjermstørrelsen */
+  margin: 0 auto; /* Sentraliserer elementet horisontalt */
+  height: 80vh; /* Setter høyden til 80% av viewport høyden */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Skygge rundt elementet */
 }
 
 #end-screen h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  text-transform: none; /* Ensures text is not in uppercase */
+  font-size: 2.5em; /* Setter fontstørrelsen på sluttskjermens overskrift */
+  margin-bottom: 20px; /* Gir mellomrom under overskriften */
+  text-transform: none; /* Sørger for at teksten ikke er i store bokstaver */
 }
 
 #endButtons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex; /* Bruker flexbox for å organisere knappene */
+  flex-direction: column; /* Vertikal retning på knappene */
+  align-items: center; /* Sentraliserer knappene horisontalt */
 }
 
 #endButtons button,
 #endButtons a {
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  margin-top: 20px;
-  text-decoration: none;
+  padding: 10px 20px; /* Indre avstand for knappene og lenken */
+  font-size: 18px; /* Fontstørrelse på knappene */
+  cursor: pointer; /* Endrer markøren til en hånd ved hover */
+  background-color: #007bff; /* Blå bakgrunnsfarge */
+  color: white; /* Hvit tekstfarge */
+  border: none; /* Fjerner kantlinjen */
+  border-radius: 5px; /* Rundede hjørner */
+  margin-top: 20px; /* Gir mellomrom over knappene */
+  text-decoration: none; /* Fjerner understreking fra lenken */
 }
 
 #endButtons a {
-  display: inline-block;
+  display: inline-block; /* Gjør lenken til en blokk for å gjøre den klikkbar */
 }
 
 #stressbarcontainer {
-  display: none;
-  position: absolute;
-  top: 10px;
-  width: 80%;
-  max-width: 800px;
-  z-index: 10;
+  display: none; /* Skjuler stressbaren før spillet starter */
+  position: absolute; /* Plasserer stressbaren absolutt på skjermen */
+  top: 10px; /* Plasserer den 10px fra toppen av skjermen */
+  width: 80%; /* Setter bredden til 80% */
+  max-width: 800px; /* Maksimal bredde på stressbaren */
+  z-index: 10; /* Sørger for at stressbaren er over andre elementer */
 }
 
 .stress-bar {
-  width: 100%;
-  height: 20px;
-  background-color: rgba(255, 0, 0, 0.3);
-  border-radius: 10px;
-  overflow: hidden;
+  width: 100%; /* Setter bredden til 100% */
+  height: 20px; /* Setter høyden til 20px */
+  background-color: rgba(255, 0, 0, 0.3); /* Rød bakgrunn med litt gjennomsiktighet */
+  border-radius: 10px; /* Runde hjørner på stressbaren */
+  overflow: hidden; /* Forhindrer at baren vokser utover */
 }
 
 .stress-fill {
-  width: 0;
-  height: 100%;
-  background-color: red;
-  transition: width 0.2s ease-in-out;
+  width: 0; /* Starter stressnivået på 0% */
+  height: 100%; /* Fyller hele høyden på stressbaren */
+  background-color: red; /* Farge på stressnivået */
+  transition: width 0.2s ease-in-out; /* Jevn overgang når stressnivået øker */
 }
 
 #gameCanvas {
-  display: none;
-  position: relative;
-  width: 90%;
-  max-width: 800px;
-  height: 50vh;
-  background-image: url('classroom.jpg');
-  background-size: cover;
-  background-position: center;
-  margin-bottom: 20px;
-  overflow: hidden;
+  display: none; /* Skjuler spillområdet før spillet starter */
+  position: relative; /* Plasserer spillområdet relativt på skjermen */
+  width: 90%; /* Setter bredden til 90% */
+  max-width: 800px; /* Maksimal bredde på spillområdet */
+  height: 50vh; /* Setter høyden til 50% av skjermhøyden */
+  background-image: url('classroom.jpg'); /* Bakgrunnsbilde for spillområdet */
+  background-size: cover; /* Sørger for at bakgrunnsbildet dekker hele området */
+  background-position: center; /* Plasserer bakgrunnsbildet i midten */
+  margin-bottom: 20px; /* Gir litt mellomrom under spillområdet */
+  overflow: hidden; /* Forhindrer at elementer overlapper spillområdet */
 }
 
 .popup-button {
-  position: absolute;
-  width: 8%;
-  max-width: 40px;
-  height: 8%;
-  max-height: 40px;
-  background-color: blue;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
+  position: absolute; /* Plasserer knappen absolutt på skjermen */
+  width: 8%; /* Setter bredden til 8% */
+  max-width: 40px; /* Maksimal bredde på knappen */
+  height: 8%; /* Setter høyden til 8% */
+  max-height: 40px; /* Maksimal høyde på knappen */
+  background-color: blue; /* Blå bakgrunnsfarge på knappen */
+  border: none; /* Fjerner kantlinjen */
+  border-radius: 50%; /* Gjør knappen rund */
+  cursor: pointer; /* Endrer markøren til en hånd ved hover */
 }
 
+/* Responsiv design for små skjermer */
 @media (max-width: 1000px) {
   header {
-    padding: 20px 50px;
+    padding: 20px 50px; /* Justerer padding på små skjermer */
   }
 }
 
 @media (max-width: 700px) {
   header {
-    flex-direction: column;
+    flex-direction: column; /* Endrer rekkefølgen på elementene */
   }
 }
 
 @media (max-width: 800px) {
   .bakgrunn {
-    min-height: 600px;
+    min-height: 600px; /* Justerer høyden på bakgrunnen */
   }
 
   .bakgrunn h1 {
-    font-size: 32px;
+    font-size: 32px; /* Reduserer fontstørrelsen på overskriften */
   }
 
   .bakgrunn h3 {
-    font-size: 20px;
+    font-size: 20px; /* Reduserer fontstørrelsen på underoverskriften */
   }
 
   .bakgrunn a.bakgrunnknapp {
-    padding: 15px 40px;
+    padding: 15px 40px; /* Justerer padding på knappene */
   }
 }
 
 @media (max-width: 600px) {
   .spill-introduksjon h1 {
-    font-size: 36px;
+    font-size: 36px; /* Justerer fontstørrelsen på overskriften */
   }
 
   .spill-introduksjon p {
-    padding: 0 15px;
+    padding: 0 15px; /* Justerer padding på teksten */
   }
 
   .spill_innhold {
-    flex-direction: column;
-    text-align: center;
+    flex-direction: column; /* Endrer layouten til kolonne på små skjermer */
+    text-align: center; /* Sentraliserer teksten */
   }
 }
 

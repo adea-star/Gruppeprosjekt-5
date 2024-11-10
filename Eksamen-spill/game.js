@@ -1,143 +1,133 @@
-// Game variables
-const stressFill = document.getElementById('stressFill');
-const gameCanvas = document.getElementById('gameCanvas');
-const startScreen = document.getElementById('start-screen');
-const endScreen = document.getElementById('end-screen');
-const retryButton = document.getElementById('retryButton');
-const nextPageLink = document.getElementById('nextPageLink');
-let stressLevel = 0;
-let gameActive = false;
-let timeRemaining = 60; // Game duration
-let spawnRate, stressIncreaseRate, stressReduction;
+// Spill variabler
+const stressFill = document.getElementById('stressFill'); // Element for å vise stressnivå
+const gameCanvas = document.getElementById('gameCanvas'); // Canvas der spillknapper dukker opp
+const startScreen = document.getElementById('start-screen'); // Startskjerm for spillet
+const endScreen = document.getElementById('end-screen'); // Sluttskjerm når spillet er over
+const retryButton = document.getElementById('retryButton'); // Knapp for å prøve spillet på nytt
+const nextPageLink = document.getElementById('nextPageLink'); // Link til neste side etter spillet
+let stressLevel = 0; // Startverdi for stressnivå
+let gameActive = false; // Angir om spillet er aktivt
+let timeRemaining = 60; // Spilletid i sekunder
+let spawnRate, stressIncreaseRate, stressReduction; // Variabler for spillbalanse
 
-// Difficulty settings
+// Valg settings
 const difficultySettings = {
     choice1: {
-        spawnRate: 1500,  // Faster spawn rate (harder)
-        stressIncreaseRate: 1,  // Faster stress increase
-        stressReduction: 15  // Less stress reduction per button click
+        spawnRate: 1500,  // Hvor fort knappene spawner for valg 1
+        stressIncreaseRate: 1,  // Økning i stressnivå for valg 1
+        stressReduction: 15  // Reduksjon av stressnivå per klikk for valg 1
     },
     choice2: {
-        spawnRate: 1500,  // Slower spawn rate (easier)
-        stressIncreaseRate: 0.5,  // Slower stress increase
-        stressReduction: 15  // More stress reduction per button click
-    }
+        spawnRate: 1500,  // Hvor fort knappene spawner for valg 2
+        stressIncreaseRate: 0.5,  // Økning i stressnivå for valg 2
+        stressReduction: 15  // Reduksjon av stressnivå per klikk for valg 2
+    },
 };
 
-// Event listeners for difficulty selection
+// Event listeners for vanskelighetsvalg
 document.getElementById('choice1').addEventListener('click', function() {
-    setDifficulty('choice1');
+    setDifficulty('choice1'); // Setter vanskelighetsgrad til valg 1
 });
 document.getElementById('choice2').addEventListener('click', function() {
-    setDifficulty('choice2');
+    setDifficulty('choice2'); // Setter vanskelighetsgrad til valg 2
 });
 
-// Function to set difficulty and start the game immediately
+// Funksjon for å sette vanskelighetsgrad og starte spillet
 function setDifficulty(choice) {
-    spawnRate = difficultySettings[choice].spawnRate;
-    stressIncreaseRate = difficultySettings[choice].stressIncreaseRate;
-    stressReduction = difficultySettings[choice].stressReduction;
+    spawnRate = difficultySettings[choice].spawnRate; // Setter spawnrate basert på valg
+    stressIncreaseRate = difficultySettings[choice].stressIncreaseRate; // Setter stressøkning basert på valg
+    stressReduction = difficultySettings[choice].stressReduction; // Setter stressreduksjon basert på valg
     
-    // Hide difficulty buttons and show the game canvas
-    document.querySelector('.difficulty-options').style.display = 'none'; 
+    document.querySelector('.difficulty-options').style.display = 'none'; // Skjuler vanskelighetsknapper og viser spillcanvas
 
-    // Start the game immediately after selecting difficulty
-    startGame();
+    startGame(); // Starter spillet etter valg av vanskelighetsgrad
 }
 
-// Function to spawn a button at a random location
+// Funksjon for å spawne en knapp på en tilfeldig posisjon
 function spawnButton() {
     if (!gameActive) return;
 
-    const button = document.createElement('button');
-    button.classList.add('popup-button');
+    const button = document.createElement('button'); // Oppretter knapp
+    button.classList.add('popup-button'); // Legger til stil for popup-knapp
     
-    // Randomize button position
-    const x = Math.random() * (gameCanvas.clientWidth - 30);
-    const y = Math.random() * (gameCanvas.clientHeight - 30);
+    const x = Math.random() * (gameCanvas.clientWidth - 30); // Tilfeldig x-posisjon
+    const y = Math.random() * (gameCanvas.clientHeight - 30); // Tilfeldig y-posisjon
     button.style.left = `${x}px`;
     button.style.top = `${y}px`;
 
-    // Add click event to reduce stress
     button.onclick = () => {
-        stressLevel = Math.max(stressLevel - stressReduction, 0); // Reduce stress
+        stressLevel = Math.max(stressLevel - stressReduction, 0); // Reduserer stress
         updateStressBar();
-        gameCanvas.removeChild(button); // Remove button after click
+        gameCanvas.removeChild(button); // Fjerner knapp etter klikk
     };
 
-    // Add button to the canvas and set timeout to remove it
-    gameCanvas.appendChild(button);
+    gameCanvas.appendChild(button); // Legger knapp til canvas
     setTimeout(() => {
         if (button.parentNode === gameCanvas) {
-            gameCanvas.removeChild(button);
+            gameCanvas.removeChild(button); // Fjerner knapp etter 1,5 sekunder
         }
-    }, 1500); // Button lasts for 1.5 seconds
+    }, 1500); 
 }
 
-// Function to update the stress bar
+// Funksjon for å oppdatere stressbaren
 function updateStressBar() {
-    stressFill.style.width = `${stressLevel}%`;
+    stressFill.style.width = `${stressLevel}%`; // Oppdaterer bredden på stressbaren
     
-    // If stress level reaches 100%, end the game
-    if (stressLevel >= 100) {
+    if (stressLevel >= 100) { // Hvis stressnivået når 100 %, avslutt spillet
         endGame('lose');
     }
 }
 
-// Function to start the game
+// Funksjon for å starte spillet
 function startGame() {
-    gameCanvas.style.display = 'block';
-    startScreen.style.display = 'none';
-    document.getElementById('stressbarcontainer').style.display = 'block';
+    gameCanvas.style.display = 'block'; // Viser spillcanvas
+    startScreen.style.display = 'none'; // Skjuler startskjermen
+    document.getElementById('stressbarcontainer').style.display = 'block'; // Viser stressbar
 
-    // Timer to spawn buttons and increase stress
     gameActive = true;
-    stressLevel = 0; // Reset stress level
-    updateStressBar(); // Update bar to reflect initial stress level (0)
+    stressLevel = 0; // Nullstiller stressnivået
+    updateStressBar(); // Oppdaterer baren til å vise startnivået
 
-    // Start the stress increase interval
     const stressInterval = setInterval(() => {
         if (gameActive) {
-            stressLevel = Math.min(stressLevel + stressIncreaseRate, 100); // Gradually increase stress
+            stressLevel = Math.min(stressLevel + stressIncreaseRate, 100); // Øker stressnivået gradvis
             updateStressBar();
         }
-    }, 100); // Increase stress every 100ms
+    }, 100); // Øker stress hvert 100 ms
 
-    // Start the button spawn interval
     const buttonSpawnInterval = setInterval(() => {
         if (gameActive) {
             spawnButton();
         }
-    }, spawnRate); // Spawn buttons based on the selected spawn rate
-        // Countdown timer for game duration
-        const countdownInterval = setInterval(() => {
-            if (gameActive) {
-                timeRemaining -= 1; // Decrease the time
-                if (timeRemaining <= 0) {
-                    endGame('win'); // End game with win if time runs out
-                    clearInterval(countdownInterval); // Stop the countdown
-                }
+    }, spawnRate); // Spawner knapper basert på spawnrate
+
+    const countdownInterval = setInterval(() => {
+        if (gameActive) {
+            timeRemaining -= 1; // Reduserer gjenværende tid
+            if (timeRemaining <= 0) {
+                endGame('win'); // Avslutter spillet med seier hvis tiden går ut
+                clearInterval(countdownInterval); // Stopper nedtellingen
             }
-        }, 1000); // Update every second
+        }
+    }, 1000); // Oppdaterer hvert sekund
 }
 
-
-// Function to end the game
+// Funksjon for å avslutte spillet
 function endGame(result) {
     gameActive = false;
-    gameCanvas.style.display = 'none';
-    document.getElementById('stressbarcontainer').style.display = 'none';
-    endScreen.style.display = 'flex';
+    gameCanvas.style.display = 'none'; // Skjuler spillcanvas
+    document.getElementById('stressbarcontainer').style.display = 'none'; // Skjuler stressbar
+    endScreen.style.display = 'flex'; // Viser sluttskjermen
     
     if (result === 'lose') {
         document.getElementById('end-message').textContent = 'Du strøk! Stresset ble for mye og du er nødt til å ta eksamen om igjen.';
-        retryButton.style.display = 'block';
-        nextPageLink.style.display = 'none';
-        retryButton.onclick = () => location.reload(); // Reload the page to retry
+        retryButton.style.display = 'block'; // Viser prøv-igjen-knappen
+        nextPageLink.style.display = 'none'; // Skjuler neste side-link
+        retryButton.onclick = () => location.reload(); // Laster inn siden på nytt for å prøve igjen
     } else if (result === 'win') {
         document.getElementById('end-message').textContent = 'Du besto! Gratulerer!';
-        retryButton.style.display = 'none';
-        nextPageLink.style.display = 'block';
-        nextPageLink.href = 'nextPage.html'; // Link to the next page
+        retryButton.style.display = 'none'; // Skjuler prøv-igjen-knappen
+        nextPageLink.style.display = 'block'; // Viser neste side-link
+        nextPageLink.href = 'nextPage.html'; // Linker til neste side
     }
 }
