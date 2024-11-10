@@ -82,7 +82,7 @@ class Students {
         this.x -= this.speed; // funksjon som oppdaterer x-posisjon ved å trekke fra farten(bevegelse mot venstre)
     }
     drawStudents() {
-        ctx.fillStyle = "rgba(0,0,0,0.5)"; // usynlig farge, kan brukes for å enkelt visualisere hitbox på de forskjellige studentene
+        ctx.fillStyle = "rgba(0,0,0,0)"; // usynlig farge, kan brukes for å enkelt visualisere hitbox på de forskjellige studentene
         ctx.fillRect(this.x, this.y, 50, 50); // tegner figurene
         ctx.drawImage(studentImage, this.x, this.y, 50, 70); // tegner studentene med bilde
     }
@@ -125,7 +125,7 @@ class Books {
         this.x -= this.speed; // oppdaterer posisjonen for hver frame
     }
     drawBooks() {
-        ctx.fillStyle = "rgba(0,0,0,0.5)"; // usynlig farge, kan endres for å sjekke hitbox
+        ctx.fillStyle = "rgba(0,0,0,0)"; // usynlig farge, kan endres for å sjekke hitbox
         ctx.beginPath(); //begynner en figur
         ctx.arc(this.x, this.y, 25, 0, Math.PI * 2) // lager sirkel-hitbox for bøker med radius 25
         ctx.fill(); // fyller sirklene med den definerte fargen
@@ -167,7 +167,7 @@ function drawPlayer() {
     if ((keys["KeyS"] || keys["ArrowDown"]) && posY < canvasHeight - sizeY) { // beveg ned så lenge figuren ikke går lenger ned enn at hele hitbox er på skjermen
         posY += 4; // fart
     }
-    ctx.fillStyle = "rgba(0,0,0,0.5)"; // usynlig farge for å enkelt sjekke hitbox om den endres
+    ctx.fillStyle = "rgba(0,0,0,0)"; // usynlig farge for å enkelt sjekke hitbox om den endres
     ctx.fillRect(posX, posY, sizeX, sizeY); // hitbox
     ctx.drawImage(playerImage, posX, posY - 20, sizeX, sizeY + 35); // tegner spillerfiguren
     
