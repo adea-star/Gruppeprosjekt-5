@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: url('images/stjerne.jpg'); 
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        /* Hvordan canvaset skal se ut */
+        #canvas-container {
+            width: 800px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid white;
+            background-color: rgba(0, 0, 0, 0.7); 
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        /*Spillet css*/
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* Fleksible ruter */
+            gap: 4px;
+            width: 100%;
+            max-width: 250px; /* Legger til bredde for å få plass  */
+        }
+
+        .tile {
+            width: 100%;
+            padding-top: 100%; 
+            position: relative;
+            border: 2px solid #d3d3d3;
+            font-size: 1.2em;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .tile > span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .correct { background-color: green; }
+        .present { background-color: yellow; color: black; }
+        .absent { background-color: gray; }
+
+        /* Tastatur layout */
+        #keyboard {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr); /* Bokstavene til å trekke seg til sidene */
+            gap: 6px;
+            width: 100%;
+            max-width: 750px; /*Gjør til at det strekker seg mere til sidene for å fylle ut området */
+            margin-top: 20px; /*  Legger til mellomrom mellom spillet og tastaturet */
+        }
+
+        .key {
+            width: 100%;
+            padding-bottom: 50%; /* minker høyden for å gjøre tastene mindre vertikale*/
+            font-size: 1.0em;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            background-color: #fff;
+            color: black;
+            user-select: none;
+        }
+
+        .key.gray { background-color: gray; color: white; }
+        .key.green { background-color: green; color: white; }
+        .key.yellow { background-color: yellow; color: black; }
+    </style>
+</head>
+<body>
+    <h1>Wordle</h1>
+    <div id="canvas-container">
+        <div id="game-board"></div>
+        <div id="keyboard"></div>
+    </div>
+
+    <script>
+        /*Legger ordene i en liste*/
+        const words = ["baker", "isbre", "farge", "lyset", "smile", "venne", "bilde", "aktør", "blant", "drama",
+        "binde", "matte", "grave", "sjakk", "treet", "stort", "skole", "extra", "rekke", "klage",
+        "dvale", "plass", "håper", "skala", "radio", "jager", "drage", "ovner", "vifte", "krone",
+        "klokt", "fjern", "pakke", "smart", "drift", "låner", "kaste", "ferde", "juble", "vrake",
+        "frukt", "trene", "eldre", "gylde", "fyker", "havne", "myter", "gjære", "gjest", "yngre",
+        "blodt", "rubin", "kaste", "vokse", "lyder", "spise", "sende", "kjole", "skyte", "telle",
+        "korte", "frisk", "skilt", "gråte", "blume", "haler", "snekk", "pride", "snart", "troll",
+        "rulle", "veien", "skape", "kappe", "hoppe", "lytte", "stine", "smake", "snepe", "skade",
+        "kaste", "felle", "støtt", "lense", "felle", "grise", "flate", "damen", "melle",
+        "søker", "skift", "skuff", "finns", "skutt", "alger", "reise", "skeis",
+        "skudd", "rente", "smått", "smalt", "brent", "klapp", "glans", "fløte",
+        "kurve", "ynger", "stive", "skinne", "kratt", "blikk", "kikke", "verne", "varde",
+        "kjapp", "bøtte", "drepe", "hoppe", "pluss", "stein", "plage", "skudd",
+        "svele", "tanke", "skrin", "jeger", "valgt", "trett", "bløte", "utvik", "skinn", "gilde",
+        "vårer", "flere", "kropp", "verv", "plått", "drikk", "glatt", "høyre",
+        "takke", "skape", "brakt", "spank", "skikk", "gjemt", "klake", "slott",
+        "balje", "fluer", "skive", "kjole", "avbit", "laste", "knekt", "sving",
+        "perle", "værer", "sanne", "fjord", "skrap", "dreit", "bombe", 
+        "stand",  "skjev",  "blokk", "slipt", "slake", "flate", "skjel",
+        "flott", "nyhet", "knall", "hette",
+        "krapp", "skamb", "skarf", "styre", 
+        "skinn","tavle", "skift", "drepe","skalk",
+        "klatt", "skarp", "liten", "blikk", "kaldt", "skrei", 
+        "alene", "alibi", "andre", "arbeid", 
+        "arisk", "atlas", "avise", "avkast", "bader", 
+        "baken", "baker", "baner", "banke", "baren", "barna", "benke", "berus", 
+        "bilde", "binds", "biter", "blikk", "bliss", "blond", "blåse", "bluss", 
+        "boker", "bolle", "bombe", "borer", "borte", "brake", "brans", "brann", "brase", "brist", 
+        "broer", "brose", "brudd", "bruke", "brukt", "buler", "bytte", "cafea", "citar", "clash", 
+        "direk", "dorte", "drage", "drakk", "drama", "dreng", "drive", "dyktig", "dette", "duell", 
+        "duett", "dyret", "dyser", "effekt", "eksel", "eklen", "eller", "enkel", "enhet", 
+        "etnis", "evnen", "ferie", "feste", "fiask", "fiken", "final", "fiske", "flere", "flint", 
+        "folie", "forse", "forte", "forts", "frost", "frukt", "fugee", "fugle", "fugle", "fyren", 
+        "galne", "garbe", "garde", "gevin", "gevin", "gjelt", "gjøre", "grasp", "grett", "grens", 
+        "grene", "gripe", "grunn", "grønn", "grunn", "gulne", "habib", "hager", "hakk", "hange", 
+        "hasse", "heike", "helge", "hilde", "hoved", "håper", "huset", "hynse", "høyre", "hytte", 
+        "inter", "jakt", "jager", "jalle", "kalte", "kamera", "karer", "karen", "kapse", "kilde", 
+        "kilef", "kors", "klappe", "kler", "klare", "klute", "knall", "knelt", "knute", "koer", 
+        "kolle", "korre", "korte", "korts", "kuse", "kåpen", "laike", "lager", "laste", "later", 
+        "levee", "letts", "lyset", "lyser", "lysere", "lørne", "liten", "liten", "makle", "maner", 
+        "marker", "mamma", "mange", "menke", "merke", "merit", "modig", "mulig", "muler", "muse", 
+        "muse", "mutter", "møte", "møte", "mørkt", "myte", "norsk", "nasje", "nevn", "normal", 
+        "nomin", "nøtte", "nårte", "null", "nikte", "nyhet", "olje", "odde", "oldeb", "onkel", 
+        "opple", "opple", "oppe", "parke", "part", "perle", "pose", "pride", "pris", "profi", 
+        "rike", "ringe", "ratt", "remse", "runde", "rulle", "ruten", "renne", "reise", "rente", 
+        "reste", "ros", "ramme", "raus","rakst", "ruke", "ruta", "rull", "rider", 
+        "siste", "skive", "skrem", "seier", "sikkert", "skrap", "stjap", "start", "tart", 
+        "terse", "tette", "turt", "tekn", "tilsk", "utry", "vinst", "våk", "vild", "zlie"
+
+        ];
+
+        let targetWord = words[Math.floor(Math.random() * words.length)];
+        let currentRow = 0;
+        let currentTile = 0;
+
+        const gameBoard = document.getElementById('game-board');
+        const keyboard = document.getElementById('keyboard');
+
+        /*Lager et rutenett 5*5 for gjettningene (5forsøk)*/
+        function createBoard() {
+            for (let i = 0; i < 5; i++) {  /*5 rader som tilsvarerforsøkene til brukeren*/ 
+                for (let j = 0; j < 5; j++) {  /*5 kolonner for at det er 5 bokstaver i ordet*/
+                    const tile = document.createElement('div');
+                    tile.classList.add('tile');
+                    tile.setAttribute('data-row', i);
+                    tile.setAttribute('data-tile', j);
+                    
+                    const span = document.createElement('span');
+                    tile.appendChild(span);
+                    
+                    gameBoard.appendChild(tile);
+                }
+            }
+        }
+
+        /*Lager tastaturet, inkludert æ,ø,å og en enter tast*/ 
+        function createKeyboard() {
+            const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ";
+            keys.split('').forEach(key => {
+                const keyElement = document.createElement('div');
+                keyElement.classList.add('key');
+                keyElement.textContent = key;
+                keyElement.setAttribute('data-key', key.toLowerCase());
+                keyElement.addEventListener('click', () => handleKeyPress({ key: key }));
+                keyboard.appendChild(keyElement);
+            });
+
+            /*Enter-tasten*/
+            const enterKey = document.createElement('div');
+            enterKey.classList.add('key');
+            enterKey.textContent = "Enter";
+            enterKey.setAttribute('data-key', 'enter');
+            enterKey.addEventListener('click', () => submitGuess());
+            keyboard.appendChild(enterKey);
+        }
+
+        /*Gjør at man kan trykke på tastene*/
+        function handleKeyPress(event) {
+            let key = event.key.toUpperCase();
+
+            if (key === "ENTER") {
+                if (currentTile === 5) submitGuess(); /*Funker kun når raden er fylt ut*/
+            } else if (key === "BACKSPACE") {
+                if (currentTile > 0) {
+                    currentTile--;
+                    const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${currentTile}'] span`);
+                    tile.textContent = "";
+                }
+            } else if (/^[A-ZÆØÅ]$/.test(key) && currentTile < 5) {
+                const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${currentTile}'] span`);
+                tile.textContent = key;
+                currentTile++;
+            }
+        }
+
+        /*Sjekker om ordet er gyldig*/
+        function isValidWord(word) {
+            return words.includes(word);
+        }
+
+        /*Sender inn gjetningen*/
+        function submitGuess() {
+            const guess = Array.from(document.querySelectorAll(`[data-row='${currentRow}'] span`))
+                .map(tile => tile.textContent.toLowerCase())
+                .join('');
+
+            if (guess.length < 5) return;
+
+            // Sjekk om ordet finnes i ordlisten
+            if (!isValidWord(guess)) {
+                alert("Ordet du skrev, er ikke et gyldig ord, prøv igjen.");
+                return;
+            }
+
+            for (let i = 0; i < 5; i++) {
+                const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
+                const keyElement = document.querySelector(`[data-key='${guess[i]}']`); 
+                const letter = guess[i];
+
+                if (letter === targetWord[i]) {
+                    tile.classList.add('correct');
+                    keyElement.classList.add('green');
+                } else if (targetWord.includes(letter)) {
+                    tile.classList.add('present');
+                    keyElement.classList.add('yellow');
+                } else {
+                    tile.classList.add('absent');
+                    keyElement.classList.add('gray');
+                }
+            }
+
+            if (guess === targetWord) {
+                alert("Du gjettet ordet! Gratulerer.");
+            } else if (currentRow === 4) { // 5. forsøk
+                alert(`Du tapte, ordet var "${targetWord}".`);
+            } else {
+                currentRow++;
+                currentTile = 0;
+            }
+        }
+
+        /*Starter spillet*/
+        createBoard();
+        createKeyboard();
+
+        document.addEventListener('keydown', handleKeyPress);
+    </script>
+</body>
+</html>
