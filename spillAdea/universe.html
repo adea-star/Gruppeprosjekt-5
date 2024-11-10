@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <title>KodeReisen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="spillstyle.css">
+    <style>
+        canvas {
+            border: 2px solid #333;
+            background-image: url('images/background.png.jpg');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="velgValgene" class="valgene">
+        <h2>Kapitell: 5</h2>
+        <p>Astronauten skal fly uten å treffe veggene. Kan du redde astronauten i verdensrommet?<br> Velg en av valgene:</p>
+        <div class="toValg">
+            <button onclick="startSpill('enkelt')">Skal prøve mitt beste!</button>
+            <button onclick="startSpill('vanskelig')">Så enkelt, tull bare!</button>
+        </div>
+    </div>
+
+    <div class="spillOmrade" id="spillOversikt" style="display: none;">
+        <canvas id="spillCanvas" width="1200" height="630"></canvas>
+    </div>
+
+    <div class="informasjon">
+        <div class="tittel">
+            <span class="kode">Kode</span><span class="reisen">Reisen</span>
+        </div>
+        <div class="infoOversikt" id="infoOversikt">
+            <h2>Lives: <span id="liv">3</span> | Score: <span id="poeng">0</span></h2>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('spillCanvas');
+        const ctx = canvas.getContext('2d');
+        const infoDisplay = document.getElementById('infoOversikt');
+        const velgValgene = document.getElementById('velgValgene');
+        const spillOversikt = document.getElementById('spillOversikt');  
+
+        let astronaut;
+        let hindring = [];
+        let poeng = 0;
+        let liv;
+        let spillHastighet;
+        let spillFerdig = false;
+
+        let spill = null;
+
+        function startSpill(difficulty) {
+            velgValgene.style.display = 'none';
+            spillOversikt.style.display = 'flex';
+
+            if (difficulty === 'vanskelig') {
+                liv = 1;
+                spillHastighet = 3; 
+            } else {
+                liv = 3;
+                spillHastighet = 1; 
+            }
+            begynnSpill();
+        }
+
+        function begynnSpill() {
+            astronaut = new Component(80, 40, "white", 10, 125, "image");
+            astronaut.image.src = "images/raket.png";
+            poeng = 0;
+            hindring = [];
+            spillFerdig = false;
+
+            if (!spill) {
+                spill = {
+                    interval: setInterval(updateSpill, 20),
+                    frameNo: 0,
+                };
+            }
+
+            window.addEventListener('keydown', bevegAstronaut);
+            window.addEventListener('keyup', stopAstronaut);
+        }
+
+        function Component(width, height, color, x, y, type) {
+            this.type = type;
+            this.width = width;
+            this.height = height;
+            this.x = x;
+            this.y = y;
+            this.speedX = 0;
+            this.speedY = 0;
+
+            if (type === "image") {
+                this.image = new Image();
+            }
+
+            this.update = function() {
+                if (this.type === "image" && this.image) {
+                    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+                } else {
+                    ctx.fillStyle = color;
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                }
+            }
+
+            this.newPos = function() {
+                this.x += this.speedX;
+                this.y += this.speedY * spillHastighet;
+                this.hitBoundary();
+            }
+
+            this.hitBoundary = function() {
+                const bottom = canvas.height - this.height;
+                if (this.y > bottom) this.y = bottom;
+                if (this.y < 0) this.y = 0;
+            }
+
+            this.crashWith = function(otherobj) {
+                const left = this.x;
+                const right = this.x + this.width;
+                const top = this.y;
+                const bottom = this.y + this.height;
+                const otherLeft = otherobj.x;
+                const otherRight = otherobj.x + otherobj.width;
+                const otherTop = otherobj.y;
+                const otherBottom = otherobj.y + otherobj.height;
+                return !(bottom < otherTop || top > otherBottom || right < otherLeft || left > otherRight);
+            }
+        }
+
+        function updateSpill() {
+            if (spillFerdig) return;
+
+            for (let i = 0; i < hindring.length; i++) {
+                if (astronaut.crashWith(hindring[i])) {
+                    liv--;
+                    hindring.splice(i, 1);
+                    updateInformasjon();
+
+                    if (liv <= 0) {
+                        spillFerdig = true;
+                        clearInterval(spill.interval);
+                        window.location.href = "gang.html";
+                        return;
+                    }
+                }
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            spill.frameNo += 1;
+            poeng = spill.frameNo;
+            updateInformasjon();
+
+            if (poeng >= 1000) {
+                spillFerdig = true;
+                clearInterval(spill.interval);
+                window.location.href = "vinner.html";
+                return;
+            }
+
+            if (spill.frameNo === 1 || everyInterval(150)) {
+                const x = canvas.width;
+                const minHeight = 20;
+                const maxHeight = 200;
+                const height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
+                const minGap = 50;
+                const maxGap = 200;
+                const gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
+                hindring.push(new Component(10, height, "white", x, 0));
+                hindring.push(new Component(10, x - height - gap, "white", x, height + gap));
+            }
+
+            for (let i = 0; i < hindring.length; i++) {
+                hindring[i].x -= spillHastighet;
+                hindring[i].update();
+            }
+
+            astronaut.newPos();
+            astronaut.update();
+        }
+
+        function everyInterval(n) {
+            return (spill.frameNo / n) % 1 === 0;
+        }
+
+        function bevegAstronaut(e) {
+            if (e.key === "ArrowUp") astronaut.speedY = -1;
+            if (e.key === "ArrowDown") astronaut.speedY = 1;
+            if (e.key === "ArrowRight") astronaut.speedX = 1;
+            if (e.key === "ArrowLeft") astronaut.speedX = -1;
+        }
+
+        function stopAstronaut() {
+            astronaut.speedX = 0;
+            astronaut.speedY = 0;
+        }
+
+        function updateInformasjon() {
+            document.getElementById("liv").textContent = liv;
+            document.getElementById("poeng").textContent = poeng;
+        }
+    </script>
+</body>
+</html>
