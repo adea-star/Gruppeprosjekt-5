@@ -1,10 +1,20 @@
 //henter canvas
-const game = document.getElementById("gameCanvas");
+const game = document.getElementById("gameCanvas")
 const ctx = game.getContext("2d");
+
 
 //henter start-knapp og bestemmer funksjon som skal kjøre når den trykkes på
 const startButton = document.getElementById("startSpill");
 startButton.addEventListener("click", startGame);
+
+// henter id til valg
+const velgValgene = document.getElementById("velgValgene");
+
+//lager restart knapp
+const restartButton = document.createElement("button");
+restartButton.innerText = "Restart";
+restartButton.classList = "button"; // gir knappen samme class som start-knapp
+restartButton.addEventListener("click", restartGame);
 
 //henter body id
 const body = document.getElementById("body");
@@ -12,6 +22,9 @@ const body = document.getElementById("body");
 //lagrer bredde og høyde for canvas som const
 const canvasWidth = 800;
 const canvasHeight = 500;
+
+// lager en global variabel for vanskelighetsgrad
+let difficulty = "";
 
 //setter startposisjoner og størrelse på figur
 let posX = 50;
@@ -25,7 +38,7 @@ let scoreBooks = 0; // denne variablen skal øke når man samler bøker
 let scoreScreen = 0; // denne som skrives til canvas og sjekker om spillet er vunnet
 
 // setter variable for liv
-let lives = 5;
+let lives = 0;
 
 // lager en variabel for å sjekke om spillet allerede er aktivt
 let gameActive = false;
@@ -63,13 +76,6 @@ bookImage.src = "bok.png";
 // lagrer bildefil for andre studenter
 const studentImage = new Image();
 studentImage.src = "student.png";
-
-//lager restart knapp
-const restartButton = document.createElement("button");
-restartButton.innerText = "Restart";
-restartButton.classList = "button"; // gir knappen samme class som start-knapp
-
-
 
 // lager en class constructor som generer tilfeldig posisjon og fart for studenter
 class Students {
@@ -232,8 +238,27 @@ function updatePosition() {
     requestAnimationFrame(updatePosition);
 }
 
+// lager eventlisteners for valg og lagrer vanskelighetsgrad
+document.getElementById("easy").addEventListener("click", () => {
+    difficulty = "enkel";
+    startScreen(difficulty);
+});
+document.getElementById("hard").addEventListener("click", () => {
+    difficulty = "vanskelig";
+    startScreen(difficulty);
+});
 //funksjonen som kjøres onload i body-tag
-function startScreen() {
+function startScreen(difficulty) {
+    if (difficulty === 'vanskelig') {
+        console.log(difficulty);
+        lives = 3;
+    } else {
+        lives = 5;
+        console.log(difficulty);
+    }
+    velgValgene.style.display = "none";
+    game.style.display = "flex";
+    startButton.style.display = "flex";
     ctx.font = "30px Arial";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
@@ -257,7 +282,7 @@ function startGame() {
     startButton.remove();
     // legger til restart knappen og definerer funksjonen den skal utføre
     body.appendChild(restartButton);
-    restartButton.addEventListener("click", restartGame);
+    
     
     // kjører koden for å legge til studenter i array i startGame fordi det blir resatt av restart-knappen
     addStudents();
@@ -295,6 +320,11 @@ function pauseGame() {
 
 //funksjon for restart knapp
 function restartGame() {
+    if ( difficulty === 'vanskelig') {
+        lives = 3;
+    } else {
+        lives = 5;
+    }
     // setter startposisjoner på nytt
     posX = 50;
     posY = 225;
@@ -304,8 +334,6 @@ function restartGame() {
     score = 0;
     // setter score fra bøker tilbake til 0
     scoreBooks = 0;
-    // setter lives tilbake til 3 ved restart
-    lives = 5;
 
     // tømmer canvas
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -316,12 +344,14 @@ function restartGame() {
     booksArray.length = 0;
 
     //kjører funksjon for startskjerm
-    startScreen(); 
+    startScreen(difficulty); 
 
     //fjerner restart knappen igjen
     restartButton.remove();
     //legger tilbake startknapp
-    body.appendChild(startButton);
+    if (!body.contains(startButton)) {
+        body.appendChild(startButton);
+    }
 }
 
 //legger til game over screen

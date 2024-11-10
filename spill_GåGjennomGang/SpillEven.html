@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kodereisen Game</title>
+    <link rel="stylesheet" href="spillstyle.css">
     <style>
         body {
             margin: 0;
@@ -54,12 +55,17 @@
         }
     </style>
 </head>
-<body id="body" onload="startScreen()"> <!-- funksjonen startScreen kjører når nettsiden lastes inn -->
-
-    <h1>Kodereisen</h1>
-    
-    <canvas id="gameCanvas" width="800" height="500"></canvas>
-    <button class="button" id="startSpill" type="button">Start</button>
+<body id="body"> <!-- funksjonen startScreen kjører når nettsiden lastes inn -->
+    <div id="velgValgene" class="valgene">
+        <h2>Kapittel: 1</h2>
+        <p>Du er på vei til første time og må plukke opp pensumbøker på veien <br> Du husker ikke helt hvilke bøker du trenger</p>
+        <div class="toValg">
+            <button id="easy">Du sjekker lista over bøker du trenger</button>
+            <button id="hard">Neida, husker da hvilke bøker mann skal ha</button>
+        </div>
+    </div>
+    <canvas id="gameCanvas" width="800" height="500" style="display: none;"></canvas>
+    <button class="button" id="startSpill" type="button" style="display: none;">Start</button>
 
     <script src="spillEven.js"></script>
 </body>
