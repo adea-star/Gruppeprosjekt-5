@@ -12,7 +12,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-image: url('images/stjerne.jpg'); 
+            background-image: url('images/stjerne.jpg'); /*bakgrunnsbilde*/
             background-size: cover;
             background-position: center;
             font-family: Arial, sans-serif;
@@ -36,18 +36,18 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        /*Spillet css*/
+        /*layouten for spillbrettet*/
         #game-board {
             display: grid;
-            grid-template-columns: repeat(5, 1fr); /* Fleksible ruter */
+            grid-template-columns: repeat(5, 1fr); /* kolonnene for 5 bokstavene */
             gap: 4px;
             width: 100%;
             max-width: 250px; /* Legger til bredde for å få plass  */
         }
-
+        /*utseende på boksvat rutene*/
         .tile {
             width: 100%;
-            padding-top: 100%; 
+            padding-top: 100%; /*former kvadratisk form*/
             position: relative;
             border: 2px solid #d3d3d3;
             font-size: 1.2em;
@@ -60,6 +60,7 @@
         }
 
         .tile > span {
+            /*bokstaven i midten av rutene*/
             position: absolute;
             top: 0;
             left: 0;
@@ -69,7 +70,7 @@
             align-items: center;
             justify-content: center;
         }
-
+        /*bakgrunnfarge for riktig plassert (grønn), at bokstaven finnes i ordet, men plassert feil(gul) og ikke finnes i ordet (grå)*/
         .correct { background-color: green; }
         .present { background-color: yellow; color: black; }
         .absent { background-color: gray; }
@@ -83,7 +84,7 @@
             max-width: 750px; /*Gjør til at det strekker seg mere til sidene for å fylle ut området */
             margin-top: 20px; /*  Legger til mellomrom mellom spillet og tastaturet */
         }
-
+        /*utseende på tastene*/
         .key {
             width: 100%;
             padding-bottom: 50%; /* minker høyden for å gjøre tastene mindre vertikale*/
@@ -99,7 +100,7 @@
             color: black;
             user-select: none;
         }
-
+        /*Gjør tastene på tastaturet riktig når bokstaven brukes i gjettningen*/
         .key.gray { background-color: gray; color: white; }
         .key.green { background-color: green; color: white; }
         .key.yellow { background-color: yellow; color: black; }
@@ -165,24 +166,24 @@
 
         ];
 
-        let targetWord = words[Math.floor(Math.random() * words.length)];
+        let targetWord = words[Math.floor(Math.random() * words.length)]; //Velger det tilfeldige ordet fra orlisten
         let currentRow = 0;
         let currentTile = 0;
 
-        const gameBoard = document.getElementById('game-board');
-        const keyboard = document.getElementById('keyboard');
+        const gameBoard = document.getElementById('game-board'); //Spillbrettet 
+        const keyboard = document.getElementById('keyboard'); //Tastaturet
 
         /*Lager et rutenett 5*5 for gjettningene (5forsøk)*/
         function createBoard() {
-            for (let i = 0; i < 5; i++) {  /*5 rader som tilsvarerforsøkene til brukeren*/ 
-                for (let j = 0; j < 5; j++) {  /*5 kolonner for at det er 5 bokstaver i ordet*/
+            for (let i = 0; i < 5; i++) {  //5 rader som tilsvarerforsøkene til brukeren
+                for (let j = 0; j < 5; j++) {  //5 kolonner for at det er 5 bokstaver i ordet
                     const tile = document.createElement('div');
                     tile.classList.add('tile');
                     tile.setAttribute('data-row', i);
                     tile.setAttribute('data-tile', j);
                     
                     const span = document.createElement('span');
-                    tile.appendChild(span);
+                    tile.appendChild(span); //Lager et "span" element for å vise til bokstaven
                     
                     gameBoard.appendChild(tile);
                 }
@@ -240,11 +241,11 @@
                 .map(tile => tile.textContent.toLowerCase())
                 .join('');
 
-            if (guess.length < 5) return;
+            if (guess.length < 5) return; //Avbyt om rader ikke er full
 
             // Sjekk om ordet finnes i ordlisten
             if (!isValidWord(guess)) {
-                alert("Ordet du skrev, er ikke et gyldig ord, prøv igjen.");
+                alert("Ordet ligger ikke i ordlisten, vennligst velg et annet ord!");
                 return;
             }
 
@@ -253,7 +254,7 @@
                  const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
                  const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
                  const letter = guess[i];
-                 
+                 //Farger basert på bokstavens plass i løsningsordet
                  if (tile.classList.contains('correct')) continue;
                  if (targetWord.includes(letter) && targetLetterCount[letter] > 0) {
                     tile.classList.add('present');
@@ -265,9 +266,9 @@
                 }
             }
             if (guess === targetWord) {
-                alert("Du gjettet ordet! Gratulerer.");
+                alert("Gratulerer, du gjettet riktig ord!");
             } else if (currentRow === 4) { // 5. forsøk
-                alert(`Du tapte, ordet var "${targetWord}".`);
+                alert(`Du gjettet ikke ordet, og dermed tapte. Løsningsordet var "${targetWord}".`);
             } else {
                 currentRow++;
                 currentTile = 0;
@@ -275,10 +276,10 @@
         }
 
         /*Starter spillet*/
-        createBoard();
-        createKeyboard();
+        createBoard(); //kaller opprettelsen av spillbrettet
+        createKeyboard(); //Kaller opprettelsen av tastaturet
 
-        document.addEventListener('keydown', handleKeyPress);
+        document.addEventListener('keydown', handleKeyPress); //Lytter til tastaturet
     </script>
 </body>
 </html>
