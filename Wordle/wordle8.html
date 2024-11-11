@@ -175,12 +175,11 @@
         "marker", "mamma", "mange", "menke", "merke", "merit", "modig", "mulig",  
         "mutter", "møte", "møte", "mørkt", "norsk", 
         "nøtte", "nårte","nikte", "nyhet", "onkel", 
-        "opple", "opple","parke","perle", "pose", "pride", "pris", "profi", 
+        "opple", "opple","parke","perle",  "pride", , "profi", 
         "rike", "ringe", "remse", "runde", "rulle", "ruten", "renne", "reise", "rente", 
         "reste", "ramme", "raus","rakst", "ruke", "ruta", "rull", "rider", 
         "siste", "skive", "skrem", "seier", "sikkert", "skrap", "stjap", "start", "tart", 
         "tette",
-
         ];
 
         let targetWord =/*Målordet brukeren gjetter på*/
@@ -263,6 +262,13 @@
         function isValidWord(word) {
             return words.includes(word);
         }
+        function countLetters(word) {
+            const count = {};
+            for (const letter of word) {
+                count[letter] = (count[letter] || 0) + 1;
+            }
+            return count;
+        }
 
         /*Sender inn gjetningen*/
         function submitGuess() {
@@ -282,19 +288,20 @@
                 alert("Ordet du skrev finnes ikke i ordlisten, vennligst prøv igjen.");
                 return;
             }
+            const targetLetterCount = countLetters(targetWord);
+            const guessLetterCount = countLetters(guess);
 
             /*Sjekker om ordet stemmer med løsningsordet*/
             for (let i = 0; i < 5; i++) {
-                 const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
-                 const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
-                 const letter = guess[i];
-                 
-                 if (tile.classList.contains('correct')) continue;
-                 if (targetWord.includes(letter) && targetLetterCount[letter] > 0) {
+                const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
+                const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
+                const letter = guess[i];
+
+                if (!tile.classList.contains('correct') && targetLetterCount[letter] > 0 && guessLetterCount[letter] > 0) {
                     tile.classList.add('present');
                     keyElement.classList.add('yellow');
                     targetLetterCount[letter] -= 1;
-                } else {
+                } else if (!tile.classList.contains('correct')) {
                     tile.classList.add('absent');
                     keyElement.classList.add('gray');
                 }
