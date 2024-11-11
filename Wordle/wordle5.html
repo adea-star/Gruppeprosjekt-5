@@ -115,7 +115,7 @@
 
     <script>
         /*Legger ordene i en liste*/
-        const words = ["ander","angir","ankel","aktor","avhud","apeks","avlat","agnen","arder","angis","avsky","anken","artet","akrys","aktre","ansøk","avhus","atlas","avled","alker","avløs","avslo","avbit","alved",
+        const words =  ["ander","angir","ankel","aktor","avhud","apeks","avlat","agnen","arder","angis","avsky","anken","artet","akrys","aktre","ansøk","avhus","atlas","avled","alker","avløs","avslo","avbit","alved",
         "avtok","anomi","asken","aktør","advar","antar","avhøl","amour","atlet","aldri","avlei","andra","alkis","avløv","alogi","avslå","arven","aksen","anrik","amene","akutt","avhør","avlede","alkyd","agnet","alpen","akser","amper","alene","angre","ankom","alvor","baker", "isbre", "farge", "lyset", "smile", "venne", "bilde", "aktør", "blant", "drama",
         "arves","aspen","avler","avsto","anser","avfyr","angst","ankre","avstå","anses","avisa","ansig","alarm","afobi","alger","april","avsyr","antyd","avist","anfør","alter","abort","alias","armen","avsøk","avgud","avkle","anime","annen","adlyd","album","binde", "matte", "grave", "sjakk", "treet", "stort", "skole", "extra", "rekke", "klage",
         "alien","atter","altre","annet","avtal","andel","ahorn","anker","arter","avtar","ammet","avkom","aioli","byrge","baggy","bøyle","bestå","beist","blåse","basta","brise","bytte","binær","båren","beton","borer","bodde","blend","båtis","brisen","bybud","boten","brunk","blink","biten","bryst","befal","blott","bjelk","bylag","bunne","bråkt","behag","bløff","beita","blaut","bytur","betre","boden","brott","bæren","båtkø","buldr","boier","brunt","bedag","baner","biffe","bøga","berge","bryte","befar","","barbe","byliv","breer","bunns","behov","breva","bilyd","besøk","bonus","byrom","beite","blått","betro","boder","bærer","boing","bruse","blits","bygel","bølge","bifil","berik","brøda","befri","bjerk","bylov","bøsse","bomba","behov","blakk","booka","brite","betyd","buing","brrrr","blesa","bydel","bøffa","brush","blitt","beføl","baren","bombe","beige","bløte","byråd","bimbo","blege","betyr","buken","bruda","bause","blese","bæret","byder","bojar","brusk",
@@ -176,15 +176,15 @@
         "marker", "mamma", "mange", "menke", "merke", "merit", "modig", "mulig",  
         "mutter", "møte", "møte", "mørkt", "norsk", 
         "nøtte", "nårte","nikte", "nyhet", "onkel", 
-        "opple", "opple","parke","perle", "pose", "pride", "pris", "profi", 
+        "opple", "opple","parke","perle",  "pride", , "profi", 
         "rike", "ringe", "remse", "runde", "rulle", "ruten", "renne", "reise", "rente", 
         "reste", "ramme", "raus","rakst", "ruke", "ruta", "rull", "rider", 
         "siste", "skive", "skrem", "seier", "sikkert", "skrap", "stjap", "start", "tart", 
         "tette",
-
         ];
 
         let targetWord = words[Math.floor(Math.random() * words.length)]; //Velger det tilfeldige ordet fra orlisten
+        let targetLetterCount = createLetterCount(targetWord);
         let currentRow = 0;
         let currentTile = 0;
 
@@ -228,6 +228,14 @@
             enterKey.addEventListener('click', () => submitGuess());
             keyboard.appendChild(enterKey);
         }
+        function createLetterCount(word) {
+            const letterCount = {};
+            for (let letter of word) {
+                letterCount[letter] = (letterCount[letter] || 0) + 1;
+            }
+            return letterCount;
+        }
+
 
         /*Gjør at man kan trykke på tastene*/
         function handleKeyPress(event) {
@@ -266,23 +274,38 @@
                 alert("Ordet ligger ikke i ordlisten, vennligst velg et annet ord!");
                 return;
             }
+            let currentLetterCount = { ...targetLetterCount };
 
-                        /*Sjekker om ordet stemmer med løsningsordet*/
+            /*Sjekker om ordet stemmer med løsningsordet*/
             for (let i = 0; i < 5; i++) {
                  const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
                  const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
                  const letter = guess[i];
-                 //Farger basert på bokstavens plass i løsningsordet
-                 if (tile.classList.contains('correct')) continue;
-                 if (targetWord.includes(letter) && targetLetterCount[letter] > 0) {
-                    tile.classList.add('present');
-                    keyElement.classList.add('yellow');
-                    targetLetterCount[letter] -= 1;
-                } else {
-                    tile.classList.add('absent');
-                    keyElement.classList.add('gray');
+
+                 if (targetWord[i] === letter) {
+                    tile.classList.add('correct');
+                    keyElement.classList.add('green');
+                    currentLetterCount[letter] -= 1;
                 }
             }
+
+            for (let i = 0; i < 5; i++) {
+                const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
+                const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
+                const letter = guess[i];
+
+                if (!tile.classList.contains('correct')) {
+                    if (targetWord.includes(letter) && currentLetterCount[letter] > 0) {
+                        tile.classList.add('present');
+                        keyElement.classList.add('yellow');
+                        currentLetterCount[letter] -= 1;
+                    } else {
+                        tile.classList.add('absent');
+                        keyElement.classList.add('gray');
+                    }
+                }
+            }
+
             if (guess === targetWord) {
                 alert("Gratulerer, du gjettet riktig ord!");
             } else if (currentRow === 4) { // 5. forsøk
