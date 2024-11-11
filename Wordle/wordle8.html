@@ -12,7 +12,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-image: url('images/stjerne.jpg'); /*Setter bakgrunnsbide*/
+            background-image: url('images/stjerne.jpg'); 
             background-size: cover;
             background-position: center;
             font-family: Arial, sans-serif;
@@ -23,7 +23,6 @@
             margin-bottom: 20px;
         }
 
-        /* Hvordan Canvaset skal se ut*/
         #canvas-container {
             width: 800px;
             height: 600px;
@@ -36,15 +35,15 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        /* Spillet css */
+        
         #game-board {
             display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 5 kolonner for bokstavene */
+            grid-template-columns: repeat(5, 1fr);
             gap: 4px;
             width: 100%;
-            max-width: 250px; /* Legger til bredde for å få plass */
+            max-width: 250px;
         }
-        /*Definerer stil for bokstav rutene*/
+
         .tile {
             width: 100%;
             padding-top: 100%; 
@@ -69,25 +68,24 @@
             align-items: center;
             justify-content: center;
         }
-        /*fargekodene, hvis bokstav er plassert riktig(grønn), hvis bokstav finnes i ordet (gul), og hvis det ikke er i ordet(grå)*/
+
         .correct { background-color: green; }
         .present { background-color: yellow; color: black; }
         .absent { background-color: gray; }
 
-        /*Tastatur layout*/
         #keyboard {
             display: grid;
-            grid-template-columns: repeat(11, 1fr); /* Bokstavene til å trekke seg til sidene */
+            grid-template-columns: repeat(11, 1fr);
             gap: 6px;
             width: 100%;
-            max-width: 750px; /* Gjør til at det strekker seg mere til sidene for å fylle ut området */
-            margin-top: 20px; /* Legger til mellomrom mellom spillet og tastaturet */
+            max-width: 750px;
+            margin-top: 20px;
         }
-        /*oppsettet fo tastene på skjermen*/
+
         .key {
             width: 100%;
-            padding-bottom: 50%; /* Minsker høyden for å lage gjøre tastene mindre vertikalt */
-            font-size: 1.0em; /*Justere skriftstørrelsen */
+            padding-bottom: 50%;
+            font-size: 1.0em;
             text-align: center;
             display: flex;
             align-items: center;
@@ -113,7 +111,6 @@
     </div>
 
     <script>
-        /*Legger ordene i en liste*/
         const words = ["ander","angir","ankel","aktor","avhud","apeks","avlat","agnen","arder","angis","avsky","anken","artet","akrys","aktre","ansøk","avhus","atlas","avled","alker","avløs","avslo","avbit","alved",
         "avtok","anomi","asken","aktør","advar","antar","avhøl","amour","atlet","aldri","avlei","andra","alkis","avløv","alogi","avslå","arven","aksen","anrik","amene","akutt","avhør","avlede","alkyd","agnet","alpen","akser","amper","alene","angre","ankom","alvor","baker", "isbre", "farge", "lyset", "smile", "venne", "bilde", "aktør", "blant", "drama",
         "arves","aspen","avler","avsto","anser","avfyr","angst","ankre","avstå","anses","avisa","ansig","alarm","afobi","alger","april","avsyr","antyd","avist","anfør","alter","abort","alias","armen","avsøk","avgud","avkle","anime","annen","adlyd","album","binde", "matte", "grave", "sjakk", "treet", "stort", "skole", "extra", "rekke", "klage",
@@ -180,31 +177,29 @@
         "reste", "ramme", "raus","rakst", "ruke", "ruta", "rull", "rider", 
         "siste", "skive", "skrem", "seier", "sikkert", "skrap", "stjap", "start", "tart", 
         "tette",
-        ];
 
-        let targetWord =/*Målordet brukeren gjetter på*/
+        ];  // Ordlisten med gyldige ord
+        let targetWord;
         let currentRow = 0;
         let currentTile = 0;
 
         const gameBoard = document.getElementById('game-board');
         const keyboard = document.getElementById('keyboard');
 
-        /*Velger et tilfeldig ord fra ordlisten*/ 
         function chooseWord() {
             targetWord = words[Math.floor(Math.random() * words.length)];
-            console.log("Ordet var: ", targetWord); 
-            startGame();  /*Starter spillet når ordet er valgt*/ 
+            console.log("Ordet er: ", targetWord);
+            startGame();
         }
-        /*Starter spillet ved å lage et brett og tastatur*/
+
         function startGame() {
             createBoard();
             createKeyboard();
         }
 
-        /*Lager et rutenett 5*7for gjettingene (7forsøk)*/
         function createBoard() {
-            for (let i = 0; i < 7; i++) {  /*7 rader som tilsvarer forsøkene til brukeren*/ 
-                for (let j = 0; j < 5; j++) {  /*5 kolonner for at det er 5 bokstaver i ordene*/ 
+            for (let i = 0; i < 7; i++) {
+                for (let j = 0; j < 5; j++) {
                     const tile = document.createElement('div');
                     tile.classList.add('tile');
                     tile.setAttribute('data-row', i);
@@ -218,7 +213,6 @@
             }
         }
 
-        /*Lager tastaturet, inkludert æ,ø,å og en enter-tast*/ 
         function createKeyboard() {
             const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ";
             keys.split('').forEach(key => {
@@ -230,7 +224,6 @@
                 keyboard.appendChild(keyElement);
             });
 
-            /*Enter-tasten*/
             const enterKey = document.createElement('div');
             enterKey.classList.add('key');
             enterKey.textContent = "Enter";
@@ -239,12 +232,11 @@
             keyboard.appendChild(enterKey);
         }
 
-        /*Gjør til at man kan trykke på tastene*/
         function handleKeyPress(event) {
             let key = event.key.toUpperCase();
 
             if (key === "ENTER") {
-                if (currentTile === 5) submitGuess(); /*Funker kun når raden er fylt ut*/ 
+                if (currentTile === 5) submitGuess();
             } else if (key === "BACKSPACE") {
                 if (currentTile > 0) {
                     currentTile--;
@@ -258,10 +250,10 @@
             }
         }
 
-        /*Sjekker om ordet er gyldig*/ 
         function isValidWord(word) {
             return words.includes(word);
         }
+
         function countLetters(word) {
             const count = {};
             for (const letter of word) {
@@ -270,7 +262,6 @@
             return count;
         }
 
-        /*Sender inn gjetningen*/
         function submitGuess() {
             if (!targetWord) {
                 alert("Vennligst prøv igjen.");
@@ -282,16 +273,29 @@
                 .join('');
 
             if (guess.length < 5) return;
-
-            /*Sjekker om ordet er gyldig*/ 
             if (!isValidWord(guess)) {
-                alert("Ordet du skrev finnes ikke i ordlisten, vennligst prøv igjen.");
+                alert("Ordet finnes ikke i ordlisten, prøv igjen.");
                 return;
             }
+
             const targetLetterCount = countLetters(targetWord);
             const guessLetterCount = countLetters(guess);
 
-            /*Sjekker om ordet stemmer med løsningsordet*/
+            // Marker riktig plasserte bokstaver (grønne)
+            for (let i = 0; i < 5; i++) {
+                const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
+                const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
+                const letter = guess[i];
+
+                if (targetWord[i] === letter) {
+                    tile.classList.add('correct');
+                    keyElement.classList.add('green');
+                    targetLetterCount[letter] -= 1;
+                    guessLetterCount[letter] -= 1;
+                }
+            }
+
+            // Marker tilstedeværende bokstaver (gule)
             for (let i = 0; i < 5; i++) {
                 const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
                 const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
@@ -306,21 +310,18 @@
                     keyElement.classList.add('gray');
                 }
             }
-            /*finner ut om brukeren ha funnet løsningsordet*/
+
             if (guess === targetWord) {
-                alert("Gratulerer du fant løsningsordet!");
-            } else if (currentRow === 6) {  /*7 forsøk*/
-                alert(`Du fant ikke løsningsordet, ordet var "${targetWord}".`);
+                alert("Gratulerer du fant ordet!");
+            } else if (currentRow === 6) {
+                alert(`Du fant ikke ordet, ordet var "${targetWord}".`);
             } else {
                 currentRow++;
                 currentTile = 0;
             }
         }
 
-        /*Start spillet ved å velge et tilfeldig ord*/
         chooseWord();
-
-        /*Legger til tastetrykk*/ 
         document.addEventListener('keydown', handleKeyPress);
     </script>
 </body>
