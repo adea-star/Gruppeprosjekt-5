@@ -35,7 +35,7 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        
+        /*oppretter rutenett for spillet, der det er 5, siden 5 bokstaver i ordet*/         
         #game-board {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -68,11 +68,11 @@
             align-items: center;
             justify-content: center;
         }
-
+        /*bakrgunnsfarge for bokstaver som er plassert riktige(grønn), de finnes i ordet (gule) og bokstaver som ikke finnes (grå)*/
         .correct { background-color: green; }
         .present { background-color: yellow; color: black; }
         .absent { background-color: gray; }
-
+        /*tastatur*/
         #keyboard {
             display: grid;
             grid-template-columns: repeat(11, 1fr);
@@ -81,7 +81,7 @@
             max-width: 750px;
             margin-top: 20px;
         }
-
+        /*hver tast på skjermen*/
         .key {
             width: 100%;
             padding-bottom: 50%;
@@ -98,6 +98,7 @@
             user-select: none;
         }
 
+        /*fargene*/
         .key.gray { background-color: gray; color: white; }
         .key.green { background-color: green; color: white; }
         .key.yellow { background-color: yellow; color: black; }
@@ -111,6 +112,7 @@
     </div>
 
     <script>
+        /*liste med gyldige ord, og evt løsningsord*/
         const words = ["ander","angir","ankel","aktor","avhud","apeks","avlat","agnen","arder","angis","avsky","anken","artet","akrys","aktre","ansøk","avhus","atlas","avled","alker","avløs","avslo","avbit","alved",
         "avtok","anomi","asken","aktør","advar","antar","avhøl","amour","atlet","aldri","avlei","andra","alkis","avløv","alogi","avslå","arven","aksen","anrik","amene","akutt","avhør","avlede","alkyd","agnet","alpen","akser","amper","alene","angre","ankom","alvor","baker", "isbre", "farge", "lyset", "smile", "venne", "bilde", "aktør", "blant", "drama",
         "arves","aspen","avler","avsto","anser","avfyr","angst","ankre","avstå","anses","avisa","ansig","alarm","afobi","alger","april","avsyr","antyd","avist","anfør","alter","abort","alias","armen","avsøk","avgud","avkle","anime","annen","adlyd","album","binde", "matte", "grave", "sjakk", "treet", "stort", "skole", "extra", "rekke", "klage",
@@ -177,8 +179,7 @@
         "reste", "ramme", "raus","rakst", "ruke", "ruta", "rull", "rider", 
         "siste", "skive", "skrem", "seier", "sikkert", "skrap", "stjap", "start", "tart", 
         "tette",
-
-        ];  // Ordlisten med gyldige ord
+        ]; 
         let targetWord;
         let currentRow = 0;
         let currentTile = 0;
@@ -186,20 +187,23 @@
         const gameBoard = document.getElementById('game-board');
         const keyboard = document.getElementById('keyboard');
 
+        /*Velger et tilfeldig ord fra ordlisten som løsningsord*/
         function chooseWord() {
             targetWord = words[Math.floor(Math.random() * words.length)];
             console.log("Ordet er: ", targetWord);
             startGame();
         }
 
+        /*Starter spillet ved å lage ett brett og tasatur*/
         function startGame() {
             createBoard();
             createKeyboard();
         }
 
+        /*Lager spillbrettet ved 7*5 siden de er 5 bokstaver i ordet og 7 gjetninger*/
         function createBoard() {
-            for (let i = 0; i < 7; i++) {
-                for (let j = 0; j < 5; j++) {
+            for (let i = 0; i < 7; i++) { //7 gjetninger
+                for (let j = 0; j < 5; j++) { // 5 koloner
                     const tile = document.createElement('div');
                     tile.classList.add('tile');
                     tile.setAttribute('data-row', i);
@@ -213,6 +217,7 @@
             }
         }
 
+        /*Tastaturet med hele alfabetet inkludert Æ, Ø og Å og en enter knapp*/
         function createKeyboard() {
             const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ";
             keys.split('').forEach(key => {
@@ -224,6 +229,7 @@
                 keyboard.appendChild(keyElement);
             });
 
+            /*Enter knappen*/
             const enterKey = document.createElement('div');
             enterKey.classList.add('key');
             enterKey.textContent = "Enter";
@@ -232,11 +238,12 @@
             keyboard.appendChild(enterKey);
         }
 
+        /*Tastetrykk ifra brukeren*/
         function handleKeyPress(event) {
             let key = event.key.toUpperCase();
 
             if (key === "ENTER") {
-                if (currentTile === 5) submitGuess();
+                if (currentTile === 5) submitGuess(); //sjekker om raden er fylt ut
             } else if (key === "BACKSPACE") {
                 if (currentTile > 0) {
                     currentTile--;
@@ -250,6 +257,7 @@
             }
         }
 
+        /*Sjekker om ordet finnes i listen*/
         function isValidWord(word) {
             return words.includes(word);
         }
@@ -262,6 +270,7 @@
             return count;
         }
 
+        
         function submitGuess() {
             if (!targetWord) {
                 alert("Vennligst prøv igjen.");
@@ -281,7 +290,7 @@
             const targetLetterCount = countLetters(targetWord);
             const guessLetterCount = countLetters(guess);
 
-            // Marker riktig plasserte bokstaver (grønne)
+            /*Sjekker om bokstaver er riktig plassert*/
             for (let i = 0; i < 5; i++) {
                 const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
                 const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
@@ -295,7 +304,7 @@
                 }
             }
 
-            // Marker tilstedeværende bokstaver (gule)
+            /*Sjekker om de er i ordet men feil plassert*/
             for (let i = 0; i < 5; i++) {
                 const tile = document.querySelector(`[data-row='${currentRow}'][data-tile='${i}']`);
                 const keyElement = document.querySelector(`[data-key='${guess[i]}']`);
@@ -311,6 +320,7 @@
                 }
             }
 
+            /*Sjekker om brukeren har funnet løsningsordet*/
             if (guess === targetWord) {
                 alert("Gratulerer du fant ordet!");
             } else if (currentRow === 6) {
